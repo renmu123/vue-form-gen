@@ -1,58 +1,198 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
-  </div>
+  <div class="">aaaaa</div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
-  }
-}
-</script>
+  components: {},
+  setup() {},
+  data() {
+    return {
+      element: {
+        input: {
+          type: {
+            type: "string",
+            default: "text",
+          },
+          maxlength: {
+            type: "number",
+          },
+          minlength: {
+            type: "number",
+          },
+          "show-word-limit": {
+            type: "boolean",
+            default: false,
+          },
+          placeholder: {
+            type: "string",
+            default: "请输入",
+          },
+          clearable: {
+            type: "boolean",
+            default: false,
+          },
+          "show-password": {
+            type: "boolean",
+            default: false,
+          },
+          disabled: {
+            type: "bolean",
+            default: false,
+          },
+          size: {
+            type: "string",
+            msg: "只在 type!='textarea' 时有效",
+          },
+          "prefix-icon": {
+            type: "string",
+          },
+          "suffix-icon": {
+            type: "string",
+          },
+          rows: {
+            type: "number",
+            default: 2,
+          },
+          autosize: {
+            type: "boolean",
+            default: false,
+          },
+          autocomplete: {
+            type: "string",
+            default: "off",
+          },
+          name: {
+            type: "string",
+          },
+          readonly: {
+            type: "boolean",
+            default: false,
+          },
+          max: {
+            type: "number",
+          },
+          min: {
+            type: "number",
+          },
+          step: {
+            type: "number",
+          },
+          resize: {
+            type: "string",
+          },
+          autofocus: {
+            type: "boolean",
+          },
+          form: {
+            type: "string",
+          },
+          label: {
+            type: "string",
+          },
+          tabindex: {
+            type: "string",
+          },
+          "validate-event": {
+            type: "boolean",
+            default: true,
+          },
+        },
+      },
+      data: {
+        "hide-required-asterisk": false,
+        "show-message": true,
+        "label-width": "100px",
+        /**
+         * medium,small,mini
+         */
+        size: "",
+        modal: "form",
+        item: [
+          {
+            type: "input",
+            required: false,
+            label: "年龄",
+            prop: "name",
+            sub: { type: "text", placeholder: "hello" },
+          },
+          {
+            type: "input",
+            required: false,
+            label: "年龄1",
+            prop: "name1",
+            sub: { type: "text", placeholder: "hello" },
+          },
+          {
+            type: "input",
+            required: false,
+            label: "年龄2",
+            prop: "name2",
+            sub: { type: "text", placeholder: "hello" },
+          },
+          {
+            type: "input",
+            required: true,
+            label: "年龄3",
+            prop: "name3",
+            sub: { type: "text", placeholder: "hello" },
+          },
+        ],
+      },
+    };
+  },
+  created() {},
+  mounted() {
+    this.genForm(this.data);
+  },
+  computed: {},
+  watch: {},
+  methods: {
+    genForm(data) {
+      let example = `
+      <el-form :model="numberValidateForm" ref="numberValidateForm" label-width="100px" class="demo-ruleForm">
+        <el-form-item
+          label="年龄"
+          prop="age"
+          :rules="[
+            { required: true, message: '年龄不能为空'},
+            { type: 'number', message: '年龄必须为数字值'}
+          ]"
+        >
+          <el-input type="age" v-model="numberValidateForm.age" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="submitForm('numberValidateForm')">提交</el-button>
+          <el-button @click="resetForm('numberValidateForm')">重置</el-button>
+        </el-form-item>
+      </el-form>
+      `;
+      console.log(example);
+      let formItem = data.item.map((item) => {
+        let subItem = "";
+        let props = [];
+        if (item.type === "input") {
+          let newItem = {};
+          for (const [key, value] of Object.entries(item.sub)) {
+            // console.log(key, value, this.element.input[key]);
+            if (this.element.input[key].default !== value) {
+              newItem[key] = value;
+              props.push(`${key}="${value}"`);
+            }
+          }
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>
+          subItem = `<el-input ${props.join(" ")}></el-input>`;
+        }
+        return `<el-form-item label="${item.label}" prop="${item.prop}" v-model="${data.modal}.${item.prop}">${subItem}</el-form-item>`;
+      });
+      let result = `
+      <el-form v-model="${data.modal}" class="${
+        data.class || ""
+      }" label-width="${data["label-width"]}">${formItem.join("")}</el-form>
+      `;
+      console.log(result);
+    },
+  },
+};
+</script>
+<style scoped></style>
