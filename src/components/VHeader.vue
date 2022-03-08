@@ -1,5 +1,5 @@
 <template>
-  <div class="">aaaaa</div>
+  <div class=""></div>
 </template>
 
 <script>
@@ -61,6 +61,7 @@ export default {
           autocomplete: {
             type: "string",
             default: "off",
+            select: ["on", "off"],
           },
           name: {
             type: "string",
@@ -148,33 +149,13 @@ export default {
   computed: {},
   watch: {},
   methods: {
-    genForm(data) {
-      let example = `
-      <el-form :model="numberValidateForm" ref="numberValidateForm" label-width="100px" class="demo-ruleForm">
-        <el-form-item
-          label="年龄"
-          prop="age"
-          :rules="[
-            { required: true, message: '年龄不能为空'},
-            { type: 'number', message: '年龄必须为数字值'}
-          ]"
-        >
-          <el-input type="age" v-model="numberValidateForm.age" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="submitForm('numberValidateForm')">提交</el-button>
-          <el-button @click="resetForm('numberValidateForm')">重置</el-button>
-        </el-form-item>
-      </el-form>
-      `;
-      console.log(example);
+    genTemplate(data) {
       let formItem = data.item.map((item) => {
         let subItem = "";
         let props = [];
         if (item.type === "input") {
           let newItem = {};
           for (const [key, value] of Object.entries(item.sub)) {
-            // console.log(key, value, this.element.input[key]);
             if (this.element.input[key].default !== value) {
               newItem[key] = value;
               props.push(`${key}="${value}"`);
@@ -191,6 +172,29 @@ export default {
       }" label-width="${data["label-width"]}">${formItem.join("")}</el-form>
       `;
       console.log(result);
+    },
+    genData() {},
+    genForm(data) {
+      const template = this.genTemplate(data);
+      // let example = `
+      // <el-form :model="numberValidateForm" ref="numberValidateForm" label-width="100px" class="demo-ruleForm">
+      //   <el-form-item
+      //     label="年龄"
+      //     prop="age"
+      //     :rules="[
+      //       { required: true, message: '年龄不能为空'},
+      //       { type: 'number', message: '年龄必须为数字值'}
+      //     ]"
+      //   >
+      //     <el-input type="age" v-model="numberValidateForm.age" autocomplete="off"></el-input>
+      //   </el-form-item>
+      //   <el-form-item>
+      //     <el-button type="primary" @click="submitForm('numberValidateForm')">提交</el-button>
+      //     <el-button @click="resetForm('numberValidateForm')">重置</el-button>
+      //   </el-form-item>
+      // </el-form>
+      // `;
+      // console.log(example);
     },
   },
 };

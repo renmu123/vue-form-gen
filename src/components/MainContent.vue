@@ -20,6 +20,7 @@ export default {
   setup() {},
   data() {
     return {
+      myArray: [],
       form: {
         name: "1",
         name2: "2",
