@@ -3,7 +3,7 @@
   <div class="aside">
     {{ currentItem }}
     <el-tabs type="border-card">
-      <el-tab-pane label="控件配置">
+      <el-tab-pane label="组件配置">
         <div v-for="(item, key) in options" :key="key">
           <p class="title">{{ item.name }}({{ key }})</p>
           <div v-if="item.type === 'string'">
@@ -33,7 +33,7 @@
           ></b-select-options>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="组件管理">
+      <el-tab-pane label="通用配置">
         <div v-for="(item, key) in itemOptions" :key="key">
           <p class="title">{{ item.name }}({{ key }})</p>
           <div v-if="item.type === 'string'">
@@ -60,6 +60,7 @@
           </div>
         </div>
       </el-tab-pane>
+      <el-tab-pane label="表单配置"></el-tab-pane>
     </el-tabs>
   </div>
 </template>
