@@ -1,75 +1,49 @@
 <!--  -->
 <template>
   <div class="aside">
-    {{ currentItem }}
     <el-tabs type="border-card">
       <el-tab-pane label="组件配置">
-        <div v-for="(item, key) in options" :key="key">
-          <p class="title">{{ item.name }}({{ key }})</p>
-          <div v-if="item.type === 'string'">
-            <el-input v-model="currentItem.sub[key]"></el-input>
+        <div v-if="currentItem.length === 0">暂无数据</div>
+        <template v-else>
+          <div>
+            <p class="title">字段名</p>
+            <el-input v-model="currentItem.prop"></el-input>
           </div>
-
-          <div v-if="item.type === 'number'">
-            <el-input v-model="currentItem.sub[key]" type="number"></el-input>
+          <div>
+            <p class="title">标题</p>
+            <el-input v-model="currentItem.label"></el-input>
           </div>
-
-          <div v-if="item.type === 'boolean'">
-            <el-switch v-model="currentItem.sub[key]"></el-switch>
+          <div v-for="(item, key) in options" :key="key">
+            <config-field
+              :item="item"
+              v-model="currentItem.sub[key]"
+            ></config-field>
           </div>
-          <div v-if="item.type === 'select'">
-            <el-select v-model="currentItem.sub[key]" placeholder="请选择">
-              <el-option
-                v-for="value in item.select"
-                :key="value"
-                :label="value"
-                :value="value"
-              >
-              </el-option>
-            </el-select>
-          </div>
-          <b-select-options
-            v-if="item.type === 'select-options'"
-          ></b-select-options>
+        </template>
+      </el-tab-pane>
+      <el-tab-pane label="表单项配置">
+        <div v-if="currentItem.length === 0">暂无数据</div>
+        <div v-for="(item, key) in itemOptions" :key="key" v-else>
+          <config-field :item="item" v-model="currentItem[key]"></config-field>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="通用配置">
-        <div v-for="(item, key) in itemOptions" :key="key">
-          <p class="title">{{ item.name }}({{ key }})</p>
-          <div v-if="item.type === 'string'">
-            <el-input v-model="currentItem.sub[key]"></el-input>
-          </div>
-
-          <div v-else-if="item.type === 'number'">
-            <el-input v-model="currentItem.sub[key]" type="number"></el-input>
-          </div>
-
-          <div v-else-if="item.type === 'boolean'">
-            <el-switch v-model="currentItem.sub[key]"></el-switch>
-          </div>
-          <div v-else-if="item.type === 'select'">
-            <el-select v-model="currentItem.sub[key]" placeholder="请选择">
-              <el-option
-                v-for="value in item.select"
-                :key="value"
-                :label="value"
-                :value="value"
-              >
-              </el-option>
-            </el-select>
-          </div>
+      <el-tab-pane label="表单配置">
+        <div v-if="currentItem.length === 0">暂无数据</div>
+        <div v-for="(item, key) in formOptions" :key="key" v-else>
+          <config-field :item="item" v-model="form.form[key]"></config-field>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="表单配置"></el-tab-pane>
     </el-tabs>
   </div>
 </template>
 
 <script>
-import BSelectOptions from "./config/BSelectOptions.vue";
+import ConfigField from "./ConfigField";
 
 export default {
-  components: { BSelectOptions },
+  components: {
+    ConfigField,
+  },
   setup() {},
   data() {
     return {};
@@ -78,16 +52,21 @@ export default {
   mounted() {},
   computed: {
     options() {
-      return this.$store.state.element[this.currentItem.type];
-    },
-    inputsConfig() {
-      return this.$store.state.element.input;
+      const components =
+        this.$store.getters.componentsObj[this.currentItem.type];
+      return components ? components.config : [];
     },
     itemOptions() {
-      return this.$store.state.element.itemOptions;
+      return this.$store.state.itemOptions;
+    },
+    formOptions() {
+      return this.$store.state.formOptions;
     },
     currentItem() {
       return this.$store.getters.currentItem;
+    },
+    form() {
+      return this.$store.state.form;
     },
   },
   watch: {},

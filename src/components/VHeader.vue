@@ -22,8 +22,8 @@ export default {
     form() {
       return this.$store.state.form;
     },
-    element() {
-      return this.$store.state.element;
+    componentsObj() {
+      return this.$store.getters.componentsObj;
     },
   },
   watch: {},
@@ -32,9 +32,9 @@ export default {
       let formItem = data.items.map((item) => {
         let subItem = "";
         let props = [];
-        if (item.type === "input") {
+        if (item.type === "b-input") {
           for (const [key, value] of Object.entries(item.sub)) {
-            const c = this.element.input[key];
+            const c = this.componentsObj[item.type].config[key];
             if (c.default !== value) {
               if (c.type === "string") {
                 props.push(`${key}="${value}"`);
@@ -44,10 +44,10 @@ export default {
             }
           }
           subItem = `<el-input ${props.join(" ")}></el-input>`;
-        } else if (item.type === "select") {
+        } else if (item.type === "b-select") {
           // 生成属性
           for (const [key, value] of Object.entries(item.sub)) {
-            const c = this.element.select[key];
+            const c = this.componentsObj[item.type].config[key];
             if (c.default !== value) {
               if (c.use === false) {
                 continue;
@@ -62,7 +62,7 @@ export default {
 
           // 生成options 元素
           const subSubItem = `<el-option
-                        v-for="item in ${data.model}.options"
+                        v-for="item in ${data.form.model}.options"
                         :key="item.value"
                         :label="item.label"
                         :value="item.value">
@@ -73,9 +73,9 @@ export default {
         return `<el-form-item label="${item.label}" prop="${item.prop}" v-model="${data.model}.${item.prop}">${subItem}</el-form-item>`;
       });
       let result = `
-      <el-form v-model="${data.model}" class="${
+      <el-form v-model="${data.form.model}" class="${
         data.class || ""
-      }" label-width="${data["label-width"] || ""}">${formItem.join(
+      }" label-width="${data.form["label-width"] || ""}">${formItem.join(
         ""
       )}</el-form>
       `;

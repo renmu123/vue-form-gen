@@ -14,15 +14,6 @@ export default {
   created() {},
   mounted() {},
   computed: {
-    options() {
-      return this.$store.state.element[this.currentItem.type];
-    },
-    inputsConfig() {
-      return this.$store.state.element.input;
-    },
-    itemOptions() {
-      return this.$store.state.element.itemOptions;
-    },
     currentItem() {
       return this.$store.getters.currentItem;
     },

@@ -23,6 +23,12 @@ export default {
     MainAsideRight,
     MainContent,
   },
+  data() {
+    return {
+      value: "111",
+    };
+  },
+  methods: {},
 };
 </script>
 <style scoped>

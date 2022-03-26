@@ -1,10 +1,13 @@
 <template>
-  <div id="app">
+  <div id="app" class="iconfont">
     <router-view />
   </div>
 </template>
 
 <style>
+i {
+  font-style: normal;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   color: #2c3e50;

@@ -1,0 +1,23 @@
+{
+  "id": "3280236",
+  "name": "表单生成器",
+  "font_family": "iconfont",
+  "css_prefix_text": "form-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "248922",
+      "name": "select",
+      "font_class": "select",
+      "unicode": "e661",
+      "unicode_decimal": 58977
+    },
+    {
+      "icon_id": "11215250",
+      "name": "input",
+      "font_class": "input",
+      "unicode": "e6fd",
+      "unicode_decimal": 59133
+    }
+  ]
+}
