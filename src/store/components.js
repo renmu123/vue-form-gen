@@ -12,6 +12,12 @@ const ElSelect = {
   _render: selectRender,
 
   config: {
+    value: {
+      type: "string",
+      default: "",
+      name: "默认值",
+      use: false,
+    },
     options: {
       type: "select-options",
       name: "选项",

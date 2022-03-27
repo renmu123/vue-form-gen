@@ -80,7 +80,6 @@ export default {
   watch: {},
   methods: {
     changeSpan(val) {
-      // console.log(val);
       this.$store.commit("setSpan", val);
     },
   },

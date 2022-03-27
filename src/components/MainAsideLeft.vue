@@ -105,6 +105,7 @@ export default {
           span: span, // 重要
           label: "选择器",
           sub: {
+            value: "",
             placeholder: "请选择",
             disabled: false,
             options: [
@@ -137,7 +138,6 @@ export default {
 
     clone(data) {
       const res = this.genData(data.name);
-      console.log(res);
       return res;
     },
   },

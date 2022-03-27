@@ -4,8 +4,6 @@ import {
   html as html_beautify,
 } from "js-beautify";
 
-// console.log(js_beautify, css_beautify, html_beautify);
-
 export const beautifierConf = {
   html: {
     indent_size: "2",

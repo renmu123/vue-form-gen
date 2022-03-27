@@ -44,13 +44,11 @@ export default {
     },
     "$store.state.span": {
       async handler(newVal) {
-        console.log("update-span", newVal);
         await setSpan(newVal);
       },
     },
     "$store.state.globalId": {
       async handler(newVal) {
-        console.log("update-id", newVal);
         await setGlobalId(newVal);
       },
     },

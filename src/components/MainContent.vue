@@ -109,7 +109,6 @@ export default {
       console.log("content", data);
     },
     log({ added }) {
-      console.log("content-log", added);
       this.$store.commit("setCurrentIndex", added.newIndex);
     },
     onEnd() {},

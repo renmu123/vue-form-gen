@@ -1,14 +1,11 @@
 import store from "@/store";
 
 export function defaultRender(item, form) {
-  // console.log(item);
-  console.log(store.getters.componentsObj);
   let props = [];
   const options = store.getters.componentsObj[item.type];
 
   for (const [key, value] of Object.entries(item.sub)) {
     const configItem = options.config[key];
-    // console.log(key, value, configItem);
     if (configItem.default !== value) {
       if (configItem.use === false) {
         continue;
@@ -27,7 +24,7 @@ export function defaultRender(item, form) {
     return {
       template: componentHTML,
       data: {
-        formData: { prop: item.prop, value: item.sub.value } ?? {},
+        formData: { [item.prop]: item.sub.value } ?? {},
       },
     };
   }
@@ -37,6 +34,13 @@ export function selectRender(item, form) {
   let props = [];
   for (const [key, value] of Object.entries(item.sub)) {
     const configItem = store.getters.componentsObj[item.type].config[key];
+    // console.log(
+    //   "aa",
+    //   configItem,
+    //   item.type,
+    //   store.getters.componentsObj[item.type],
+    //   key
+    // );
     if (configItem.default !== value) {
       if (configItem.use === false) {
         continue;
@@ -64,8 +68,8 @@ export function selectRender(item, form) {
 
   return {
     template: componentHTML,
-    formData: { prop: item.prop, value: item.sub.value } ?? {},
     data: {
+      formData: { [item.prop]: item.sub.value } ?? {},
       [optionsData]: item.sub.options,
     },
   };

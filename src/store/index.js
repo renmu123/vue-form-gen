@@ -49,7 +49,6 @@ export default new Vuex.Store({
     deletItem(state, index) {
       state.form.items.splice(index, 1);
       const length = state.form.items.length;
-      console.log(length);
       if (length !== 0) {
         if (index <= state.currentIndex) {
           if (state.currentIndex === 0) {
