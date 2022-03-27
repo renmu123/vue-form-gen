@@ -14,6 +14,7 @@ import VHeader from "@/components/VHeader.vue";
 import MainAsideLeft from "@/components/MainAsideLeft.vue";
 import MainAsideRight from "@/components/MainAsideRight.vue";
 import MainContent from "@/components/MainContent.vue";
+import { saveForm } from "@/api";
 
 export default {
   name: "Home",
@@ -28,7 +29,20 @@ export default {
       value: "111",
     };
   },
+  computed: {
+    form() {
+      return this.$store.state.form;
+    },
+  },
   methods: {},
+  watch: {
+    form: {
+      async handler(newVal) {
+        const data = await saveForm(newVal);
+      },
+      deep: true,
+    },
+  },
 };
 </script>
 <style scoped>

@@ -46,10 +46,11 @@ export default new Vuex.Store({
     deletItem(state, index) {
       state.form.items.splice(index, 1);
       const length = state.form.items.length;
+      console.log(length);
       if (length !== 0) {
         if (index <= state.currentIndex) {
           if (state.currentIndex === 0) {
-            state.currentIndex = state.form.items.length;
+            state.currentIndex = length - 1;
           } else {
             state.currentIndex -= 1;
           }
@@ -58,6 +59,10 @@ export default new Vuex.Store({
     },
     copyItem(state, index) {
       state.form.items.splice(index, 0, state.form.items[index]);
+    },
+    // 移除所有组件
+    clearItems(state) {
+      state.form.items = [];
     },
   },
   actions: {},

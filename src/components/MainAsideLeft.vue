@@ -7,34 +7,65 @@
       :key="index"
     >
       <p>{{ category }}</p>
-      <div class="c-container">
+      <draggable
+        class="dragArea list-group c-container"
+        :list="items"
+        :group="{ name: 'components', pull: 'clone', put: false }"
+        :clone="clone"
+        :sort="false"
+        @end="onEnd"
+      >
         <div class="c-body" v-for="(item, index2) in items" :key="index2">
           <div class="c-item" @click="add(item.name)">
             <i :class="item.icon" />
             {{ item.title }}
           </div>
         </div>
-      </div>
+      </draggable>
     </div>
+
+    <!-- <draggable
+      class="dragArea list-group"
+      :list="list1"
+      :group="{ name: 'people', pull: 'clone', put: false }"
+      :clone="cloneDog"
+      @change="log"
+    >
+      <div class="list-group-item" v-for="element in list1" :key="element.id">
+        {{ element.name }}
+      </div> -->
+    <!-- </draggable> -->
   </aside>
 </template>
 
 <script>
 import { groupBy } from "lodash-es";
+import draggable from "vuedraggable";
+
+import { getForm } from "@/api";
 
 export default {
-  components: {},
+  components: {
+    draggable,
+  },
   data() {
     return {};
   },
   created() {},
-  mounted() {
-    this.add("b-input");
-    this.add("b-select");
-    this.add("b-select");
-    this.add("b-select");
+  async mounted() {
+    const form = await getForm();
+    if (form) {
+      this.$store.commit("updateForm", form);
+      if (form.items.length === 0) {
+        this.add("b-input");
+        this.add("b-select");
+        this.add("b-select");
+        this.add("b-select");
+      }
+    }
+    console.log("form", form);
 
-    this.$store.commit("setCurrentIndex", 1);
+    this.$store.commit("setCurrentIndex", 0);
   },
   computed: {
     componentsArr() {
@@ -54,6 +85,11 @@ export default {
   watch: {},
   methods: {
     add(type) {
+      const item = this.genData(type);
+      this.$store.commit("pushItem", item);
+      // console.log(item);
+    },
+    genData(type) {
       let item = "";
       if (type === "b-input") {
         item = {
@@ -86,14 +122,20 @@ export default {
           this.componentsObj[type].config
         )) {
           if (!(key2 in item.sub) && value2.default) {
-            // console.log(type, key2, value2);
             item.sub[key2] = value2.default;
           }
         }
       }
       console.log(item);
-      this.$store.commit("pushItem", item);
-      // console.log(item);
+      return item;
+    },
+
+    clone(data) {
+      console.log("clone-drag", data);
+      return this.genData(data.name);
+    },
+    onEnd(obj) {
+      console.log(obj);
     },
   },
 };
@@ -108,11 +150,14 @@ export default {
   width: 400px;
 }
 .c-container {
-  display: flex;
-  justify-content: space-around;
+  /* display: flex; */
+  /* justify-content: space-around; */
 }
 .c-body {
-  width: 180px;
+  /* width: 180px; */
+  display: inline-block;
+  width: 48%;
+  margin: 1%;
 }
 .c-item {
   background-color: #f6f7ff;
