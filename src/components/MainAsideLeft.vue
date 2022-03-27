@@ -13,7 +13,6 @@
         :group="{ name: 'components', pull: 'clone', put: false }"
         :clone="clone"
         :sort="false"
-        @end="onEnd"
       >
         <div class="c-body" v-for="(item, index2) in items" :key="index2">
           <div class="c-item" @click="add(item.name)">
@@ -23,18 +22,6 @@
         </div>
       </draggable>
     </div>
-
-    <!-- <draggable
-      class="dragArea list-group"
-      :list="list1"
-      :group="{ name: 'people', pull: 'clone', put: false }"
-      :clone="cloneDog"
-      @change="log"
-    >
-      <div class="list-group-item" v-for="element in list1" :key="element.id">
-        {{ element.name }}
-      </div> -->
-    <!-- </draggable> -->
   </aside>
 </template>
 
@@ -42,7 +29,7 @@
 import { groupBy } from "lodash-es";
 import draggable from "vuedraggable";
 
-import { getForm } from "@/api";
+import { getForm, getGobalId, getSpan } from "@/api";
 
 export default {
   components: {
@@ -53,18 +40,7 @@ export default {
   },
   created() {},
   async mounted() {
-    const form = await getForm();
-    if (form) {
-      this.$store.commit("updateForm", form);
-      if (form.items.length === 0) {
-        this.add("b-input");
-        this.add("b-select");
-        this.add("b-select");
-        this.add("b-select");
-      }
-    }
-    console.log("form", form);
-
+    await this.init();
     this.$store.commit("setCurrentIndex", 0);
   },
   computed: {
@@ -81,30 +57,55 @@ export default {
     itemOptions() {
       return this.$store.state.itemOptions;
     },
+    form() {
+      return this.$store.state.form;
+    },
   },
   watch: {},
   methods: {
-    add(type) {
+    async init() {
+      const span = await getSpan();
+      this.$store.commit("setSpan", span);
+      const globalId = await getGobalId();
+      this.$store.commit("setGlobalId", globalId);
+
+      const form = await getForm();
+      if (form) {
+        this.$store.commit("updateForm", form);
+        if (form.items.length === 0) {
+          await this.add("b-input");
+        }
+      }
+    },
+    async add(type) {
       const item = this.genData(type);
       this.$store.commit("pushItem", item);
-      // console.log(item);
     },
     genData(type) {
       let item = "";
+      const span = this.$store.state.span;
+
       if (type === "b-input") {
         item = {
           type: type,
+          span: span, // 重要
           required: false,
-          label: "输入",
-          sub: { type: "text", placeholder: "请输入", clearable: false },
+          label: "输入框111",
+          sub: {
+            value: "",
+            type: "text",
+            placeholder: "请输入111",
+            clearable: false,
+          },
         };
       } else if (type === "b-select") {
         item = {
           type: type,
           required: false,
-          label: "选择",
+          span: span, // 重要
+          label: "选择器",
           sub: {
-            placeholder: "请选",
+            placeholder: "请选择",
             disabled: false,
             options: [
               { value: "选项3", label: "选项3" },
@@ -117,6 +118,11 @@ export default {
       for (const [key, value] of Object.entries(this.itemOptions)) {
         if (!(key in item) && value.default) {
           item[key] = value.default;
+          if (key === "prop") {
+            const globalId = this.$store.state.globalId;
+            this.$store.commit("setGlobalId", globalId + 1);
+            item[key] = `field_${globalId}`;
+          }
         }
         for (const [key2, value2] of Object.entries(
           this.componentsObj[type].config
@@ -126,16 +132,13 @@ export default {
           }
         }
       }
-      console.log(item);
       return item;
     },
 
     clone(data) {
-      console.log("clone-drag", data);
-      return this.genData(data.name);
-    },
-    onEnd(obj) {
-      console.log(obj);
+      const res = this.genData(data.name);
+      console.log(res);
+      return res;
     },
   },
 };
@@ -149,12 +152,7 @@ export default {
 .wrapper {
   width: 400px;
 }
-.c-container {
-  /* display: flex; */
-  /* justify-content: space-around; */
-}
 .c-body {
-  /* width: 180px; */
   display: inline-block;
   width: 48%;
   margin: 1%;

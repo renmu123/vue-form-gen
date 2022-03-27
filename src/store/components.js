@@ -1,3 +1,5 @@
+import { defaultRender, selectRender } from "@/components/render/render";
+
 const BSelect = {
   doc: "https://element.eleme.cn/#/zh-CN/component/select",
   desc: "",
@@ -7,6 +9,8 @@ const BSelect = {
   category: "基础组件",
   icon: "form-select",
   replaceName: "el-select",
+  render: selectRender,
+
   config: {
     options: {
       type: "select-options",
@@ -155,11 +159,13 @@ const BInput = {
   name: "b-input",
   replaceName: "el-input",
   icon: "form-input",
+  render: defaultRender,
   config: {
     value: {
       type: "string",
       default: "",
       name: "默认值",
+      use: false,
     },
     type: {
       type: "select",
@@ -288,12 +294,12 @@ const BInput = {
 export const itemOptions = {
   prop: {
     type: "string",
-    default: "text",
-    name: "表单域 model 字段",
+    default: "field",
+    name: "字段名",
   },
   label: {
     type: "string",
-    name: "	标签文本",
+    name: "标签文本",
   },
   "label-width": {
     type: "string",

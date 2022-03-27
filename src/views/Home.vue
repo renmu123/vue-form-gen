@@ -14,7 +14,7 @@ import VHeader from "@/components/VHeader.vue";
 import MainAsideLeft from "@/components/MainAsideLeft.vue";
 import MainAsideRight from "@/components/MainAsideRight.vue";
 import MainContent from "@/components/MainContent.vue";
-import { saveForm } from "@/api";
+import { saveForm, setSpan, setGlobalId } from "@/api";
 
 export default {
   name: "Home",
@@ -38,9 +38,21 @@ export default {
   watch: {
     form: {
       async handler(newVal) {
-        const data = await saveForm(newVal);
+        await saveForm(newVal);
       },
       deep: true,
+    },
+    "$store.state.span": {
+      async handler(newVal) {
+        console.log("update-span", newVal);
+        await setSpan(newVal);
+      },
+    },
+    "$store.state.globalId": {
+      async handler(newVal) {
+        console.log("update-id", newVal);
+        await setGlobalId(newVal);
+      },
     },
   },
 };

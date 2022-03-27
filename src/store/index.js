@@ -18,6 +18,8 @@ export default new Vuex.Store({
     itemOptions: itemOptions,
     componentsArr: componentsData,
     currentIndex: -1,
+    span: 24,
+    globalId: 1,
   },
   getters: {
     currentItem(state) {
@@ -39,6 +41,7 @@ export default new Vuex.Store({
     },
     pushItem(state, item) {
       state.form.items.push(item);
+      state.currentIndex = state.form.items.length - 1;
     },
     setCurrentIndex(state, index) {
       state.currentIndex = Number(index);
@@ -63,6 +66,14 @@ export default new Vuex.Store({
     // 移除所有组件
     clearItems(state) {
       state.form.items = [];
+    },
+    // 设置全局间隔
+    setSpan(state, span) {
+      state.span = span;
+    },
+    // 设置全局id
+    setGlobalId(state, id) {
+      state.globalId = id;
     },
   },
   actions: {},

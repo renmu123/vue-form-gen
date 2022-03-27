@@ -10,12 +10,13 @@
             :group="{ name: 'components' }"
             :clone="clone"
             @change="log"
+            @end="onEnd"
           >
             <template
               v-for="(item, index) in form.items"
               class="item-container"
             >
-              <el-col :span="12" :key="index" class="relative">
+              <el-col :span="item.span" :key="index" class="relative">
                 <el-form-item
                   :label="item.label"
                   :size="item.size"
@@ -107,9 +108,11 @@ export default {
     clone(data) {
       console.log("content", data);
     },
-    log(data) {
-      console.log("content-log", data);
+    log({ added }) {
+      console.log("content-log", added);
+      this.$store.commit("setCurrentIndex", added.newIndex);
     },
+    onEnd() {},
   },
 };
 </script>
