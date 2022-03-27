@@ -1,23 +1,33 @@
 <template>
   <div class="">
-    <el-button @click="genForm(form)">生成</el-button>
-    <!-- <el-input type="textarea" v-model="template" autosize></el-input> -->
+    <el-button @click="dialogVisible = true">生成</el-button>
+    <el-dialog title="提示" :visible.sync="dialogVisible" width="80%">
+      <el-button @click="genText(form)">生成</el-button>
+      <p style="white-space: pre-wrap">{{ template }}</p>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogVisible = false"
+          >确 定</el-button
+        >
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { defaultRender, selectRender } from "@/components/render/render";
+import { jsFormat, htmlFormat, cssFormat } from "@/utils";
 
 export default {
   components: {},
   data() {
     return {
       template: "",
+      dialogVisible: false,
     };
   },
   created() {},
   mounted() {
-    this.template = this.genTemplate(this.form);
+    // console.log(this.genVueScript("export default{aa:'aa'}"));
   },
   computed: {
     form() {
@@ -29,31 +39,53 @@ export default {
   },
   watch: {},
   methods: {
-    genTemplate(data) {
+    genData(data) {
       let formItem = data.items.map((item) => {
         console.log("item", item);
-        const render = this.$store.getters.componentsObj[item.type].render;
-        console.log("pp", render);
+        const render = this.$store.getters.componentsObj[item.type]._render;
 
         let subItem = render(item, data).template;
 
-        return `<el-form-item label="${item.label}" prop="${item.prop}">${subItem}</el-form-item>`;
+        return `<el-col :span="${item.span}"><el-form-item label="${item.label}" prop="${item.prop}">${subItem}</el-form-item></el-col>`;
       });
-      let result = `
-      <el-form v-model="${data.form.model}" class="${
-        data.class || ""
-      }" label-width="${data.form["label-width"] || ""}">${formItem.join(
-        ""
-      )}</el-form>
+
+      let html = `
+      <el-row><el-form v-model="${data.form.model}" label-width="${
+        data.form["label-width"] || ""
+      }" ref="elForm">${formItem.join("")}</el-form></el-row>
       `;
 
-      return result;
+      return this.genVueTemplate(html);
+      return {
+        template: "",
+        data: "",
+      };
     },
-    genData() {},
+    genHtml(item, form) {},
+    genJS(data) {},
 
-    genForm(data) {
-      const template = this.genTemplate(data);
-      console.log(template);
+    genVueTemplate(val) {
+      const formatVal = htmlFormat(val);
+      return `<template>
+        <div>
+          ${formatVal}
+        </div>
+      </template>`;
+    },
+    genVueScript(val) {
+      const formatVal = jsFormat(val);
+
+      return `<script>\n${formatVal}\n<script>`;
+    },
+    genVueStyle(val) {
+      return `<style scoped>\n${val}\n<style>`;
+    },
+
+    genText(data) {
+      const template = this.genData(data);
+      this.template = template;
+      console.log(this.template);
+      // console.log(jsFormat("console.log('aa')"));
     },
   },
 };

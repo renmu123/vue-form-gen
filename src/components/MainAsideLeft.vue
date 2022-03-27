@@ -73,7 +73,7 @@ export default {
       if (form) {
         this.$store.commit("updateForm", form);
         if (form.items.length === 0) {
-          await this.add("b-input");
+          await this.add("el-input");
         }
       }
     },
@@ -85,7 +85,7 @@ export default {
       let item = "";
       const span = this.$store.state.span;
 
-      if (type === "b-input") {
+      if (type === "el-input") {
         item = {
           type: type,
           span: span, // 重要
@@ -98,7 +98,7 @@ export default {
             clearable: false,
           },
         };
-      } else if (type === "b-select") {
+      } else if (type === "el-select") {
         item = {
           type: type,
           required: false,

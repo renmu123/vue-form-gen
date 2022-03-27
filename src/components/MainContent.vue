@@ -27,7 +27,7 @@
                   @click.native="config(index)"
                 >
                   <el-input
-                    v-if="item.type === 'b-input'"
+                    v-if="item.type === 'el-input'"
                     v-model="item.sub.value"
                     :placeholder="item.sub.placeholder"
                     :type="item.sub.type"
@@ -37,7 +37,7 @@
                   ></el-input>
 
                   <el-select
-                    v-if="item.type === 'b-select'"
+                    v-if="item.type === 'el-select'"
                     :placeholder="item.sub.placeholder"
                     :multiple="item.sub.multiple"
                     :disabled="item.sub.disabled"

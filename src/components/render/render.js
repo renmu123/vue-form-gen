@@ -2,9 +2,12 @@ import store from "@/store";
 
 export function defaultRender(item, form) {
   // console.log(item);
+  console.log(store.getters.componentsObj);
   let props = [];
+  const options = store.getters.componentsObj[item.type];
+
   for (const [key, value] of Object.entries(item.sub)) {
-    const configItem = store.getters.componentsObj[item.type].config[key];
+    const configItem = options.config[key];
     // console.log(key, value, configItem);
     if (configItem.default !== value) {
       if (configItem.use === false) {
@@ -16,17 +19,18 @@ export function defaultRender(item, form) {
         props.push(`:${key}="${value}"`);
       }
     }
-  }
-  // console.log(props);
-  const componentHTML = `<el-input v-model="${form.form.model}.${
-    item.prop
-  }" ${props.join(" ")}></el-input>`;
 
-  return {
-    template: componentHTML,
-    formData: { prop: item.prop, value: item.sub.value } ?? {},
-    data: {},
-  };
+    const componentHTML = `<${options._tag} v-model="${form.form.model}.${
+      item.prop
+    }" ${props.join(" ")}></${options._tag}>`;
+
+    return {
+      template: componentHTML,
+      data: {
+        formData: { prop: item.prop, value: item.sub.value } ?? {},
+      },
+    };
+  }
 }
 
 export function selectRender(item, form) {

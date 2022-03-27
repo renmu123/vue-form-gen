@@ -1,15 +1,15 @@
 import { defaultRender, selectRender } from "@/components/render/render";
 
-const BSelect = {
+const ElSelect = {
   doc: "https://element.eleme.cn/#/zh-CN/component/select",
   desc: "",
   author: "",
   title: "选择器",
-  name: "b-select",
+  name: "el-select",
   category: "基础组件",
   icon: "form-select",
-  replaceName: "el-select",
-  render: selectRender,
+  _tag: "el-select",
+  _render: selectRender,
 
   config: {
     options: {
@@ -150,16 +150,17 @@ const BSelect = {
   },
 };
 
-const BInput = {
+const ElInput = {
   doc: "https://element.eleme.cn/#/zh-CN/component/input",
   desc: "",
   author: "",
   category: "基础组件",
   title: "输入框",
-  name: "b-input",
-  replaceName: "el-input",
+  name: "el-input",
   icon: "form-input",
-  render: defaultRender,
+  _tag: "el-input",
+  _render: defaultRender,
+
   config: {
     value: {
       type: "string",
@@ -388,4 +389,4 @@ export const formOptions = {
   },
 };
 
-export const componentsData = [BInput, BSelect];
+export const componentsData = [ElInput, ElSelect];
