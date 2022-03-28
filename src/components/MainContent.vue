@@ -16,7 +16,12 @@
               v-for="(item, index) in form.items"
               class="item-container"
             >
-              <el-col :span="item.span" :key="index" class="relative">
+              <el-col
+                :span="item.span"
+                :key="index"
+                class="col-item relative"
+                :class="{ active: currentIndex === index }"
+              >
                 <el-form-item
                   :label="item.label"
                   :size="item.size"
@@ -128,6 +133,11 @@ export default {
 .item {
   padding: 10px;
 }
+
+.active.col-item .config {
+  opacity: 1;
+}
+
 .active.item {
   background-color: #f6f7ff;
 }
@@ -138,11 +148,11 @@ export default {
   position: absolute;
   bottom: 15px;
   right: 8px;
-  /* opacity: 0; */
+  opacity: 0;
 }
-/* .config:hover {
+.col-item:hover .config {
   opacity: 1;
-} */
+}
 </style>
 
 <style>

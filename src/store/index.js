@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import { componentsData, itemOptions, formOptions } from "./components";
-import { keyBy } from "lodash-es";
+import { keyBy, cloneDeep } from "lodash-es";
 
 Vue.use(Vuex);
 
@@ -60,7 +60,13 @@ export default new Vuex.Store({
       }
     },
     copyItem(state, index) {
-      state.form.items.splice(index, 0, state.form.items[index]);
+      let item = cloneDeep(state.form.items[index]);
+
+      const globalId = state.globalId;
+      item.prop = `field_${globalId}`;
+      state.form.items.splice(index + 1, 0, item);
+
+      state.globalId += 1;
     },
     // 移除所有组件
     clearItems(state) {
