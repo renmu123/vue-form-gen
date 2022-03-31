@@ -1,13 +1,9 @@
-import store from "@/store";
-
-export function defaultRender(item, form) {
+function genProps(item, options) {
   let props = [];
-  const options = store.getters.componentsObj[item.type];
-
   for (const [key, value] of Object.entries(item.sub)) {
     const configItem = options.config[key];
     if (configItem.default !== value) {
-      if (configItem.use === false) {
+      if (configItem.inProp === false) {
         continue;
       }
       if (configItem.type === "string") {
@@ -16,42 +12,55 @@ export function defaultRender(item, form) {
         props.push(`:${key}="${value}"`);
       }
     }
-
-    const componentHTML = `<${options._tag} v-model="${form.form.model}.${
-      item.prop
-    }" ${props.join(" ")}></${options._tag}>`;
-
-    return {
-      template: componentHTML,
-      data: {
-        formData: { [item.prop]: item.sub.value } ?? {},
-      },
-    };
   }
+
+  return props.join(" ");
 }
 
-export function selectRender(item, form) {
-  let props = [];
-  for (const [key, value] of Object.entries(item.sub)) {
-    const configItem = store.getters.componentsObj[item.type].config[key];
-    // console.log(
-    //   "aa",
-    //   configItem,
-    //   item.type,
-    //   store.getters.componentsObj[item.type],
-    //   key
-    // );
-    if (configItem.default !== value) {
-      if (configItem.use === false) {
-        continue;
-      }
-      if (configItem.type === "string") {
-        props.push(`${key}="${value}"`);
-      } else {
-        props.push(`:${key}="${value}"`);
-      }
-    }
-  }
+export function defaultRender(item, options, form) {
+  const props = genProps(item, options);
+  const tag = options._tag;
+  const model = `${form.form.model}.${item.prop}`;
+
+  const componentHTML = `<${tag} v-model="${model}" ${props}></${tag}>`;
+
+  return {
+    template: componentHTML,
+    data: {
+      formData: { [item.prop]: item.sub._defaultValue } ?? {},
+    },
+  };
+}
+
+export function radioRender(item, options, form) {
+  const props = genProps(item, options);
+  const tag = options._tag;
+  const model = `${form.form.model}.${item.prop}`;
+
+  // 生成options 元素
+  const optionsData = `${item.prop}Options`;
+  const childrenComponentHTML = `<el-radio
+                v-for="item in ${optionsData}"
+                :key="item.value"
+                :label="item.label"
+                >{{item.value}}}
+              </el-radio>`;
+
+  const componentHTML = `<${tag} v-model="${model}" ${props}>${childrenComponentHTML}</${tag}>`;
+
+  return {
+    template: componentHTML,
+    data: {
+      formData: { [item.prop]: item.sub._defaultValue } ?? {},
+      [optionsData]: item.sub.options,
+    },
+  };
+}
+
+export function selectRender(item, options, form) {
+  const props = genProps(item, options);
+  const tag = options._tag;
+  const model = `${form.form.model}.${item.prop}`;
 
   // 生成options 元素
   const optionsData = `${item.prop}Options`;
@@ -61,15 +70,12 @@ export function selectRender(item, form) {
                 :label="item.label"
                 :value="item.value">
               </el-option>`;
-  // Object.entries(item.sub.options).map((item) => {});
-  const componentHTML = `<el-select v-model="${form.form.model}.${
-    item.prop
-  }" ${props.join(" ")}>${childrenComponentHTML}</el-select>`;
+  const componentHTML = `<${tag} v-model="${model}" ${props}>${childrenComponentHTML}</${tag}>`;
 
   return {
     template: componentHTML,
     data: {
-      formData: { [item.prop]: item.sub.value } ?? {},
+      formData: { [item.prop]: item.sub._defaultValue } ?? {},
       [optionsData]: item.sub.options,
     },
   };

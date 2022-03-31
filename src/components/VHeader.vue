@@ -47,11 +47,13 @@ export default {
   methods: {
     genItemData(data) {
       let formItem = data.items.map((item) => {
-        const render = this.$store.getters.componentsObj[item.type]._render;
+        const options = this.$store.getters.componentsObj[item.type];
 
-        let subItem = render(item, data);
+        const render = options._render;
 
-        subItem.template = `<el-col :span="${item.span}"><el-form-item label="${item.label}" prop="${item.prop}">${subItem}</el-form-item></el-col>`;
+        let subItem = render(item, options, data);
+
+        subItem.template = `<el-col :span="${item.span}"><el-form-item label="${item.label}" prop="${item.prop}">${subItem.template}</el-form-item></el-col>`;
         return subItem;
       });
 
@@ -80,14 +82,18 @@ export default {
       let methods = [];
 
       let data = {};
+      console.log(items);
       items.forEach((item) => {
         merge(data, item.data);
       });
+      console.log(data);
       return this.genVueScript(`
       export default {
         components:{},
         props:[],
-        data(){return ${JSON.stringify(data)}},
+        data(){return ${JSON.stringify(data, (k, v) =>
+          v === undefined ? "__undefined" : v
+        ).replace(/"__undefined"/g, "undefined")}},
         computed:{},
         watch:{},
         created(){},

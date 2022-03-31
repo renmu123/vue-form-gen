@@ -1,4 +1,8 @@
-import { defaultRender, selectRender } from "@/components/render/render";
+import {
+  defaultRender,
+  selectRender,
+  radioRender,
+} from "@/components/render/render";
 
 const ElSelect = {
   doc: "https://element.eleme.cn/#/zh-CN/component/select",
@@ -12,11 +16,11 @@ const ElSelect = {
   _render: selectRender,
 
   config: {
-    value: {
+    _defaultValue: {
       type: "string",
       default: "",
       name: "默认值",
-      use: false,
+      inProp: false,
     },
     options: {
       type: "select-options",
@@ -25,7 +29,7 @@ const ElSelect = {
         { value: "选项1", label: "选项1" },
         { value: "选项2", label: "选项2" },
       ],
-      use: false,
+      inProp: false,
     },
     placeholder: {
       type: "string",
@@ -168,11 +172,11 @@ const ElInput = {
   _render: defaultRender,
 
   config: {
-    value: {
+    _defaultValue: {
       type: "string",
       default: "",
       name: "默认值",
-      use: false,
+      inProp: false,
     },
     type: {
       type: "select",
@@ -298,6 +302,55 @@ const ElInput = {
   },
 };
 
+const elRadioGroup = {
+  doc: "https://element.eleme.cn/#/zh-CN/component/radio",
+  desc: "",
+  author: "",
+  category: "基础组件",
+  title: "单选框",
+  name: "el-radio-group",
+  icon: "el-radio-group",
+  _tag: "el-radio-group",
+  _render: radioRender,
+
+  config: {
+    _defaultValue: {
+      type: "string",
+      default: "",
+      name: "默认值",
+      inProp: false,
+    },
+    options: {
+      type: "select-options",
+      name: "选项",
+      default: [
+        { value: "选项1", label: "1" },
+        { value: "选项2", label: "2" },
+      ],
+      inProp: false,
+    },
+    disabled: {
+      type: "boolean",
+      default: false,
+      name: "是否禁用",
+      inProp: false,
+    },
+    border: {
+      type: "boolean",
+      default: false,
+      name: "显示边框",
+      inProp: false,
+    },
+    size: {
+      type: "select",
+      default: "",
+      name: "大小",
+      select: ["medium", "small", "mini"],
+      inProp: false,
+    },
+  },
+};
+
 export const itemOptions = {
   prop: {
     type: "string",
@@ -345,7 +398,7 @@ export const formOptions = {
     name: "行内表单模式",
   },
   "label-position": {
-    type: "string",
+    type: "select",
     default: "right",
     select: ["right", "left", "top"],
     name: "表单域标签的位置",
@@ -395,4 +448,4 @@ export const formOptions = {
   },
 };
 
-export const componentsData = [ElInput, ElSelect];
+export const componentsData = [ElInput, ElSelect, elRadioGroup];

@@ -3,7 +3,11 @@
   <div class="aside components-content">
     <el-row :gutter="15">
       <template v-if="form.items.length !== 0">
-        <el-form class="" :label-width="form.form['label-width'] || ''">
+        <el-form
+          class=""
+          :label-width="form.form['label-width'] || ''"
+          :label-position="form.form['label-position'] || ''"
+        >
           <draggable
             class="dragArea list-group"
             :list="form.items"
@@ -33,7 +37,7 @@
                 >
                   <el-input
                     v-if="item.type === 'el-input'"
-                    v-model="item.sub.value"
+                    v-model="item.sub._defaultValue"
                     :placeholder="item.sub.placeholder"
                     :type="item.sub.type"
                     :disabled="item.sub.disabled"
@@ -47,7 +51,7 @@
                     :multiple="item.sub.multiple"
                     :disabled="item.sub.disabled"
                     :clearable="item.sub.clearable"
-                    v-model="value"
+                    v-model="item.sub._defaultValue"
                   >
                     <el-option
                       v-for="item in item.sub.options"
@@ -57,6 +61,19 @@
                     >
                     </el-option>
                   </el-select>
+
+                  <el-radio-group
+                    v-model="item.sub._defaultValue"
+                    v-if="item.type === 'el-radio-group'"
+                    :disabled="item.sub.disabled"
+                  >
+                    <el-radio
+                      v-for="item in item.sub.options"
+                      :key="item.value"
+                      :label="item.label"
+                      >{{ item.value }}</el-radio
+                    >
+                  </el-radio-group>
                 </el-form-item>
                 <div class="config">
                   <i

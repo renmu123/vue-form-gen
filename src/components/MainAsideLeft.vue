@@ -92,7 +92,7 @@ export default {
           required: false,
           label: "输入框111",
           sub: {
-            value: "",
+            _defaultValue: "",
             type: "text",
             placeholder: "请输入111",
             clearable: false,
@@ -105,7 +105,7 @@ export default {
           span: span, // 重要
           label: "选择器",
           sub: {
-            value: "",
+            _defaultValue: "",
             placeholder: "请选择",
             disabled: false,
             options: [
@@ -114,6 +114,18 @@ export default {
             ],
           },
         };
+      } else if (type === "el-radio-group") {
+        item = {
+          type: type,
+          required: false,
+          span: span, // 重要
+          label: "单选框",
+          sub: {
+            _defaultValue: "",
+          },
+        };
+      } else {
+        throw Error("组件还未注册");
       }
 
       for (const [key, value] of Object.entries(this.itemOptions)) {
@@ -125,14 +137,16 @@ export default {
             item[key] = `field_${globalId}`;
           }
         }
-        for (const [key2, value2] of Object.entries(
-          this.componentsObj[type].config
-        )) {
-          if (!(key2 in item.sub) && value2.default) {
-            item.sub[key2] = value2.default;
-          }
+      }
+
+      for (const [key2, value2] of Object.entries(
+        this.componentsObj[type].config
+      )) {
+        if (!(key2 in item.sub) && value2.default) {
+          item.sub[key2] = value2.default;
         }
       }
+      console.log(item);
       return item;
     },
 
