@@ -2,7 +2,7 @@
 <template>
   <div class="b-select-options">
     <div
-      v-for="(item, index) in currentItem.sub.options"
+      v-for="(item, index) in currentItem.config.options"
       :key="index"
       style="margin-bottom: 10px"
     >
@@ -49,7 +49,7 @@ export default {
   watch: {},
   methods: {
     remove(index) {
-      this.currentItem.sub.options.splice(index, 1);
+      this.currentItem.config.options.splice(index, 1);
     },
     add() {
       if (!this.value) {
@@ -59,7 +59,7 @@ export default {
         value: this.value,
         label: this.label,
       };
-      this.currentItem.sub.options.push(data);
+      this.currentItem.config.options.push(data);
       this.value = "";
       this.label = "";
     },

@@ -4,18 +4,18 @@
     <el-form label-width="120px" label-position="left">
       <el-tabs type="border-card" value="1">
         <el-tab-pane label="组件配置" name="1">
-          <div v-if="!currentItem">暂无数据</div>
+          <div v-if="isEmpty(currentItem)">暂无数据</div>
           <template v-else>
             <el-form-item label="字段名" class="form-item">
-              <el-input v-model="currentItem.prop"></el-input>
+              <el-input v-model="currentItem.itemConfig.prop"></el-input>
             </el-form-item>
             <el-form-item label="标题" class="form-item">
-              <el-input v-model="currentItem.label"></el-input>
+              <el-input v-model="currentItem.itemConfig.label"></el-input>
             </el-form-item>
 
             <el-form-item label="栅格" class="form-item">
               <el-slider
-                v-model="currentItem.span"
+                v-model="currentItem.colConfig.span"
                 @change="changeSpan"
                 :max="24"
               ></el-slider>
@@ -36,14 +36,14 @@
               ></template>
               <config-field
                 :item="item"
-                v-model="currentItem.sub[key]"
+                v-model="currentItem.config[key]"
               ></config-field>
             </el-form-item>
           </template>
         </el-tab-pane>
 
         <el-tab-pane label="表单项配置" name="2">
-          <div v-if="!currentItem">暂无数据</div>
+          <div v-if="isEmpty(currentItem)">暂无数据</div>
           <template v-else>
             <el-form-item
               v-for="(item, key) in itemOptions.config"
@@ -60,14 +60,14 @@
               ></template>
               <config-field
                 :item="item"
-                v-model="currentItem[key]"
+                v-model="currentItem.itemConfig[key]"
               ></config-field>
             </el-form-item>
           </template>
         </el-tab-pane>
 
         <el-tab-pane label="表单配置" name="3">
-          <div v-if="!currentItem">暂无数据</div>
+          <div v-if="isEmpty(currentItem)">暂无数据</div>
           <template v-else>
             <el-form-item
               v-for="(item, key) in formOptions.config"
@@ -97,6 +97,7 @@
 
 <script>
 import ConfigField from "./ConfigField";
+import { isEmpty } from "lodash-es";
 
 export default {
   components: {
@@ -132,6 +133,7 @@ export default {
     changeSpan(val) {
       this.$store.commit("setSpan", val);
     },
+    isEmpty,
   },
 };
 </script>

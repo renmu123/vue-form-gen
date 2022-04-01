@@ -25,40 +25,40 @@
               class="item-container"
             >
               <el-col
-                :span="item.span"
+                :span="item.colConfig.span"
                 :key="index"
                 class="col-item relative"
                 :class="{ active: currentIndex === index }"
               >
                 <el-form-item
-                  :label="item.label"
-                  :size="item.size"
-                  :required="item.required"
-                  :label-width="item['label-width']"
+                  :label="item.itemConfig.label"
+                  :size="item.itemConfig.size"
+                  :required="item.itemConfig.required"
+                  :label-width="item.itemConfig['label-width']"
                   class="item"
                   :class="{ active: currentIndex === index }"
                   @click.native="config(index)"
                 >
                   <el-input
                     v-if="item.type === 'el-input'"
-                    v-model="item.sub._defaultValue"
-                    :placeholder="item.sub.placeholder"
-                    :type="item.sub.type"
-                    :disabled="item.sub.disabled"
-                    :clearable="item.sub.clearable"
-                    :show-password="item.sub['show-password']"
+                    v-model="item.config._defaultValue"
+                    :placeholder="item.config.placeholder"
+                    :type="item.config.type"
+                    :disabled="item.config.disabled"
+                    :clearable="item.config.clearable"
+                    :show-password="item.config['show-password']"
                   ></el-input>
 
                   <el-select
                     v-if="item.type === 'el-select'"
-                    :placeholder="item.sub.placeholder"
-                    :multiple="item.sub.multiple"
-                    :disabled="item.sub.disabled"
-                    :clearable="item.sub.clearable"
-                    v-model="item.sub._defaultValue"
+                    :placeholder="item.config.placeholder"
+                    :multiple="item.config.multiple"
+                    :disabled="item.config.disabled"
+                    :clearable="item.config.clearable"
+                    v-model="item.config._defaultValue"
                   >
                     <el-option
-                      v-for="item in item.sub.options"
+                      v-for="item in item.config.options"
                       :key="item.value"
                       :label="item.label"
                       :value="item.value"
@@ -67,12 +67,12 @@
                   </el-select>
 
                   <el-radio-group
-                    v-model="item.sub._defaultValue"
+                    v-model="item.config._defaultValue"
                     v-if="item.type === 'el-radio-group'"
-                    :disabled="item.sub.disabled"
+                    :disabled="item.config.disabled"
                   >
                     <el-radio
-                      v-for="item in item.sub.options"
+                      v-for="item in item.config.options"
                       :key="item.value"
                       :label="item.label"
                       >{{ item.value }}</el-radio

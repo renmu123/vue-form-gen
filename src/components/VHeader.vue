@@ -53,7 +53,7 @@ export default {
 
         let subItem = render(item, options, data);
 
-        subItem.template = `<el-col :span="${item.span}"><el-form-item label="${item.label}" prop="${item.prop}">${subItem.template}</el-form-item></el-col>`;
+        subItem.template = `<el-col :span="${item.colConfig.span}"><el-form-item label="${item.itemConfig.label}" prop="${item.itemConfig.prop}">${subItem.template}</el-form-item></el-col>`;
         return subItem;
       });
 

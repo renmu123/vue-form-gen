@@ -30,7 +30,7 @@ export default new Vuex.Store({
   getters: {
     currentItem(state) {
       if (state.currentIndex === -1) {
-        return [];
+        return {};
       }
       return state.form.items[state.currentIndex];
     },

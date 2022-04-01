@@ -35,29 +35,30 @@ export function formRender(options, cOptions, form, subComponent = "") {
  * @param  {object} 当前表单所有数据
  */
 export function defaultRender(options, cOptions, form, subComponent = "") {
-  const props = genProps(options.sub, cOptions);
+  const props = genProps(options.config, cOptions);
   const tag = cOptions.tag;
   const formDataName = form.form.model;
-  const model = `${formDataName}.${options.prop}`;
+  const model = `${formDataName}.${options.itemConfig.prop}`;
 
   const componentHTML = `<${tag} v-model="${model}" ${props}>${subComponent}</${tag}>`;
 
   return {
     template: componentHTML,
     data: {
-      [formDataName]: { [options.prop]: options.sub._defaultValue } ?? {},
+      [formDataName]:
+        { [options.itemConfig.prop]: options.config._defaultValue } ?? {},
     },
   };
 }
 
 export function radioRender(options, cOptions, form, subComponent = "") {
-  const props = genProps(options.sub, cOptions);
+  const props = genProps(options.config, cOptions);
   const tag = cOptions.tag;
   const formDataName = form.form.model;
-  const model = `${formDataName}.${options.prop}`;
+  const model = `${formDataName}.${options.itemConfig.prop}`;
 
   // 生成options 元素
-  const optionsData = `${options.prop}Options`;
+  const optionsData = `${options.itemConfig.prop}Options`;
   const childrenComponentHTML = `<el-radio
                 v-for="options in ${optionsData}"
                 :key="options.value"
@@ -70,20 +71,21 @@ export function radioRender(options, cOptions, form, subComponent = "") {
   return {
     template: componentHTML,
     data: {
-      [formDataName]: { [options.prop]: options.sub._defaultValue } ?? {},
-      [optionsData]: options.sub.options,
+      [formDataName]:
+        { [options.itemConfig.prop]: options.config._defaultValue } ?? {},
+      [optionsData]: options.config.options,
     },
   };
 }
 
 export function selectRender(options, cOptions, form, subComponent = "") {
-  const props = genProps(options.sub, cOptions);
+  const props = genProps(options.config, cOptions);
   const tag = cOptions.tag;
   const formDataName = form.form.model;
-  const model = `${formDataName}.${options.prop}`;
+  const model = `${formDataName}.${options.itemConfig.prop}`;
 
   // 生成options 元素
-  const optionsData = `${options.prop}Options`;
+  const optionsData = `${options.itemConfig.prop}Options`;
   const childrenComponentHTML = `<el-option
                 v-for="options in ${optionsData}"
                 :key="options.value"
@@ -95,8 +97,9 @@ export function selectRender(options, cOptions, form, subComponent = "") {
   return {
     template: componentHTML,
     data: {
-      [formDataName]: { [options.prop]: options.sub._defaultValue } ?? {},
-      [optionsData]: options.sub.options,
+      [formDataName]:
+        { [options.itemConfig.prop]: options.config._defaultValue } ?? {},
+      [optionsData]: options.config.options,
     },
   };
 }

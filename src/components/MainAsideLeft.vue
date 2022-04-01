@@ -88,26 +88,31 @@ export default {
 
       let item = {
         type: type,
-        span: span,
-        required: false,
-        label: components.title,
-        sub: components.defaultConfig ?? {},
+        colConfig: {
+          span: span,
+        },
+        itemConfig: {
+          required: false,
+          label: components.title,
+        },
+
+        config: components.defaultConfig ?? {},
       };
 
       for (const [key, value] of Object.entries(this.itemOptions.config)) {
         if (!(key in item) && value.default !== undefined) {
-          item[key] = value.default;
+          item.itemConfig[key] = value.default;
           if (key === "prop") {
             const globalId = this.$store.state.globalId;
             this.$store.commit("setGlobalId", globalId + 1);
-            item[key] = `field_${globalId}`;
+            item.itemConfig[key] = `field_${globalId}`;
           }
         }
       }
 
       for (const [key2, value2] of Object.entries(components.config)) {
-        if (!(key2 in item.sub) && value2.default !== undefined) {
-          item.sub[key2] = value2.default;
+        if (!(key2 in item.config) && value2.default !== undefined) {
+          item.config[key2] = value2.default;
         }
       }
       console.log("aa", item);
