@@ -2,6 +2,7 @@ import {
   defaultRender,
   selectRender,
   radioRender,
+  formRender,
 } from "@/components/render/render";
 
 const ElSelect = {
@@ -388,63 +389,72 @@ export const itemOptions = {
 };
 
 export const formOptions = {
-  model: {
-    type: "string",
-    name: "表单数据对象",
-  },
-  inline: {
-    type: "boolean",
-    default: false,
-    name: "行内表单模式",
-  },
-  "label-position": {
-    type: "select",
-    default: "right",
-    select: ["right", "left", "top"],
-    name: "位置",
-  },
-  "label-width": {
-    type: "string",
-    name: "宽度",
-  },
-  disabled: {
-    type: "boolean",
-    default: true,
-    name: "禁用表单",
-  },
-  "hide-required-asterisk": {
-    type: "boolean",
-    default: false,
-    name: "隐藏必填字段的标签旁边的红色星号",
-  },
-  size: {
-    type: "select",
-    name: "尺寸",
-    select: ["medium", "small", "mini"],
-  },
-  "show-message": {
-    type: "boolean",
-    default: true,
-    name: "显示校验错误信息",
-  },
-  "inline-message": {
-    type: "boolean",
-    default: false,
-    name: "行内展示校验信息",
-  },
-  "status-icon": {
-    type: "boolean",
-    default: false,
-    name: "输入框中显示校验结果反馈图标",
-  },
-  "validate-on-rule-change": {
-    type: "boolean",
-    default: true,
-    name: "在 rules 属性改变后立即触发一次验证",
-  },
-  "label-suffix": {
-    type: "string",
-    name: "后缀",
+  doc: "https://element.eleme.cn/#/zh-CN/component/form",
+  desc: "表单组件",
+  author: "",
+  name: "el-form",
+  tag: "el-form",
+  _render: formRender,
+
+  config: {
+    model: {
+      type: "string",
+      name: "表单数据对象",
+    },
+    inline: {
+      type: "boolean",
+      default: false,
+      name: "行内表单模式",
+    },
+    "label-position": {
+      type: "select",
+      default: "right",
+      select: ["right", "left", "top"],
+      name: "位置",
+    },
+    "label-width": {
+      type: "string",
+      name: "宽度",
+    },
+    disabled: {
+      type: "boolean",
+      default: true,
+      name: "禁用表单",
+    },
+    "hide-required-asterisk": {
+      type: "boolean",
+      default: false,
+      name: "隐藏必填字段的标签旁边的红色星号",
+    },
+    size: {
+      type: "select",
+      name: "尺寸",
+      select: ["medium", "small", "mini"],
+    },
+    "show-message": {
+      type: "boolean",
+      default: true,
+      name: "显示校验错误信息",
+    },
+    "inline-message": {
+      type: "boolean",
+      default: false,
+      name: "行内展示校验信息",
+    },
+    "status-icon": {
+      type: "boolean",
+      default: false,
+      name: "输入框中显示校验结果反馈图标",
+    },
+    "validate-on-rule-change": {
+      type: "boolean",
+      default: true,
+      name: "在 rules 属性改变后立即触发一次验证",
+    },
+    "label-suffix": {
+      type: "string",
+      name: "后缀",
+    },
   },
 };
 

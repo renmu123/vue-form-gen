@@ -1,7 +1,7 @@
-function genProps(item, options) {
+function genProps(options, cOptions) {
   let props = [];
-  for (const [key, value] of Object.entries(item.sub)) {
-    const configItem = options.config[key];
+  for (const [key, value] of Object.entries(options)) {
+    const configItem = cOptions.config[key];
     if (configItem.default !== value) {
       if (configItem.inProp === false) {
         continue;
@@ -17,69 +17,86 @@ function genProps(item, options) {
   return props.join(" ");
 }
 
-export function defaultRender(item, options, form) {
-  const props = genProps(item, options);
-  const tag = options.tag;
-  const formData = form.form.model;
-  const model = `${formData}.${item.prop}`;
+export function formRender(options, cOptions, form, subComponent = "") {
+  console.log(options, cOptions);
+  const props = genProps(options, cOptions);
+  const tag = cOptions.tag;
 
-  const componentHTML = `<${tag} v-model="${model}" ${props}></${tag}>`;
+  const componentHTML = `<${tag} ${props} ref="elForm>${subComponent}</${tag}>`;
+
+  return {
+    template: componentHTML,
+  };
+}
+
+/**
+ * @param  {object} 当前组件数据
+ * @param  {object} 组件所有选项
+ * @param  {object} 当前表单所有数据
+ */
+export function defaultRender(options, cOptions, form, subComponent = "") {
+  const props = genProps(options.sub, cOptions);
+  const tag = cOptions.tag;
+  const formDataName = form.form.model;
+  const model = `${formDataName}.${options.prop}`;
+
+  const componentHTML = `<${tag} v-model="${model}" ${props}>${subComponent}</${tag}>`;
 
   return {
     template: componentHTML,
     data: {
-      [formData]: { [item.prop]: item.sub._defaultValue } ?? {},
+      [formDataName]: { [options.prop]: options.sub._defaultValue } ?? {},
     },
   };
 }
 
-export function radioRender(item, options, form) {
-  const props = genProps(item, options);
-  const tag = options.tag;
-  const formData = form.form.model;
-  const model = `${formData}.${item.prop}`;
+export function radioRender(options, cOptions, form, subComponent = "") {
+  const props = genProps(options.sub, cOptions);
+  const tag = cOptions.tag;
+  const formDataName = form.form.model;
+  const model = `${formDataName}.${options.prop}`;
 
   // 生成options 元素
-  const optionsData = `${item.prop}Options`;
+  const optionsData = `${options.prop}Options`;
   const childrenComponentHTML = `<el-radio
-                v-for="item in ${optionsData}"
-                :key="item.value"
-                :label="item.label"
-                >{{item.value}}}
-              </el-radio>`;
+                v-for="options in ${optionsData}"
+                :key="options.value"
+                :label="options.label"
+                >{{options.value}}}
+                ${subComponent}</el-radio>`;
 
   const componentHTML = `<${tag} v-model="${model}" ${props}>${childrenComponentHTML}</${tag}>`;
 
   return {
     template: componentHTML,
     data: {
-      [formData]: { [item.prop]: item.sub._defaultValue } ?? {},
-      [optionsData]: item.sub.options,
+      [formDataName]: { [options.prop]: options.sub._defaultValue } ?? {},
+      [optionsData]: options.sub.cOptions,
     },
   };
 }
 
-export function selectRender(item, options, form) {
-  const props = genProps(item, options);
-  const tag = options.tag;
-  const formData = form.form.model;
-  const model = `${formData}.${item.prop}`;
+export function selectRender(options, cOptions, form, subComponent = "") {
+  const props = genProps(options.sub, cOptions);
+  const tag = cOptions.tag;
+  const formDataName = form.form.model;
+  const model = `${formDataName}.${options.prop}`;
 
   // 生成options 元素
-  const optionsData = `${item.prop}Options`;
+  const optionsData = `${options.prop}Options`;
   const childrenComponentHTML = `<el-option
-                v-for="item in ${optionsData}"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>`;
+                v-for="options in ${optionsData}"
+                :key="options.value"
+                :label="options.label"
+                :value="options.value">
+                ${subComponent}</el-option>`;
   const componentHTML = `<${tag} v-model="${model}" ${props}>${childrenComponentHTML}</${tag}>`;
 
   return {
     template: componentHTML,
     data: {
-      [formData]: { [item.prop]: item.sub._defaultValue } ?? {},
-      [optionsData]: item.sub.options,
+      [formDataName]: { [options.prop]: options.sub._defaultValue } ?? {},
+      [optionsData]: options.sub.cOptions,
     },
   };
 }

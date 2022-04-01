@@ -60,12 +60,20 @@ export default {
       return formItem;
     },
     genHtml(items, form) {
+      const options = this.$store.state.formOptions;
+
+      const render = options._render;
+
+      let subItem = render(
+        form.form,
+        options,
+        form,
+        `${items.map((item) => item.template).join("")}`
+      );
+
       let html = `
       <el-row :gutter="15">
-        <el-form v-model="${form.form.model}" label-width="${
-        form.form["label-width"] || ""
-      }" ref="elForm">${items.map((item) => item.template).join("")}
-        </el-form>
+        ${subItem.template}
       </el-row>
       `;
 
