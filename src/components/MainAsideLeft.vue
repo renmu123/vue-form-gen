@@ -85,6 +85,19 @@ export default {
       let item = "";
       const span = this.$store.state.span;
 
+      // let item = {
+      //   type: type,
+      //   span: span, // 重要
+      //   required: false,
+      //   label: "输入框111",
+      //   sub: {
+      //     _defaultValue: "",
+      //     type: "text",
+      //     placeholder: "请输入111",
+      //     clearable: false,
+      //   },
+      // };
+
       if (type === "el-input") {
         item = {
           type: type,
@@ -128,8 +141,8 @@ export default {
         throw Error("组件还未注册");
       }
 
-      for (const [key, value] of Object.entries(this.itemOptions)) {
-        if (!(key in item) && value.default) {
+      for (const [key, value] of Object.entries(this.itemOptions.config)) {
+        if (!(key in item) && value.default !== undefined) {
           item[key] = value.default;
           if (key === "prop") {
             const globalId = this.$store.state.globalId;
@@ -142,11 +155,11 @@ export default {
       for (const [key2, value2] of Object.entries(
         this.componentsObj[type].config
       )) {
-        if (!(key2 in item.sub) && value2.default) {
+        if (!(key2 in item.sub) && value2.default !== undefined) {
           item.sub[key2] = value2.default;
         }
       }
-      console.log(item);
+      console.log("aa", item);
       return item;
     },
 

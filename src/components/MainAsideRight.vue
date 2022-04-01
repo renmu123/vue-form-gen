@@ -46,7 +46,7 @@
           <div v-if="!currentItem">暂无数据</div>
           <template v-else>
             <el-form-item
-              v-for="(item, key) in itemOptions"
+              v-for="(item, key) in itemOptions.config"
               :key="key"
               class="form-item"
               ><template slot="label"

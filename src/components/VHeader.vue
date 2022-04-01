@@ -90,11 +90,9 @@ export default {
       let methods = [];
 
       let data = {};
-      console.log(items);
       items.forEach((item) => {
         merge(data, item.data);
       });
-      console.log(data);
       return this.genVueScript(`
       export default {
         components:{},
@@ -121,10 +119,11 @@ export default {
     genVueScript(val) {
       const formatVal = jsFormat(val);
 
-      return `<script>\n${formatVal}\n<script>`;
+      /* eslint-disable */
+      return `<script>\n${formatVal}\n<\/script>`;
     },
     genVueStyle(val) {
-      return `<style scoped>\n${val}\n<style>`;
+      return `<style scoped>\n${val}\n</style>`;
     },
 
     genText(form) {

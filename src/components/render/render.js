@@ -6,7 +6,7 @@ function genProps(options, cOptions) {
       if (configItem.inProp === false) {
         continue;
       }
-      if (configItem.type === "string") {
+      if (configItem.type === "string" || configItem.type === "select") {
         props.push(`${key}="${value}"`);
       } else {
         props.push(`:${key}="${value}"`);
@@ -18,11 +18,11 @@ function genProps(options, cOptions) {
 }
 
 export function formRender(options, cOptions, form, subComponent = "") {
-  console.log(options, cOptions);
   const props = genProps(options, cOptions);
   const tag = cOptions.tag;
+  const formDataName = form.form.model;
 
-  const componentHTML = `<${tag} ${props} ref="elForm>${subComponent}</${tag}>`;
+  const componentHTML = `<${tag} ${props} :model="${formDataName}" ref="elForm">${subComponent}</${tag}>`;
 
   return {
     template: componentHTML,
@@ -71,7 +71,7 @@ export function radioRender(options, cOptions, form, subComponent = "") {
     template: componentHTML,
     data: {
       [formDataName]: { [options.prop]: options.sub._defaultValue } ?? {},
-      [optionsData]: options.sub.cOptions,
+      [optionsData]: options.sub.options,
     },
   };
 }
@@ -96,7 +96,7 @@ export function selectRender(options, cOptions, form, subComponent = "") {
     template: componentHTML,
     data: {
       [formDataName]: { [options.prop]: options.sub._defaultValue } ?? {},
-      [optionsData]: options.sub.cOptions,
+      [optionsData]: options.sub.options,
     },
   };
 }

@@ -159,6 +159,15 @@ const ElSelect = {
       show: false,
     },
   },
+  default: {
+    _defaultValue: "",
+    placeholder: "请选择",
+    disabled: false,
+    options: [
+      { value: "选项3", label: "选项3" },
+      { value: "选项2", label: "选项2" },
+    ],
+  },
 };
 
 const ElInput = {
@@ -187,7 +196,7 @@ const ElInput = {
     },
     placeholder: {
       type: "string",
-      default: "请输入",
+      default: "",
       name: "占位文本",
     },
     clearable: {
@@ -301,6 +310,12 @@ const ElInput = {
       name: "输入触发校验",
     },
   },
+  default: {
+    _defaultValue: "",
+    type: "text",
+    placeholder: "请输入",
+    clearable: false,
+  },
 };
 
 const elRadioGroup = {
@@ -350,41 +365,50 @@ const elRadioGroup = {
       inProp: false,
     },
   },
+  default: {},
 };
 
 export const itemOptions = {
-  prop: {
-    type: "string",
-    default: "field",
-    name: "字段名",
-  },
-  label: {
-    type: "string",
-    name: "标签文本",
-  },
-  "label-width": {
-    type: "string",
-    name: "标签宽度",
-  },
-  required: {
-    type: "boolean",
-    default: false,
-    name: "必填",
-  },
-  "show-message": {
-    type: "boolean",
-    default: true,
-    name: "显示校验错误信息",
-  },
-  "inline-message": {
-    type: "boolean",
-    default: false,
-    name: "以行内形式展示校验信息",
-  },
-  size: {
-    type: "select",
-    name: "尺寸",
-    select: ["medium", "small", "mini"],
+  doc: "https://element.eleme.cn/#/zh-CN/component/form",
+  desc: "表单组件",
+  author: "",
+  name: "el-form",
+  tag: "el-form",
+  // _render: formRender,
+  config: {
+    prop: {
+      type: "string",
+      default: "field",
+      name: "字段名",
+    },
+    label: {
+      type: "string",
+      name: "标签文本",
+    },
+    "label-width": {
+      type: "string",
+      name: "标签宽度",
+    },
+    required: {
+      type: "boolean",
+      default: false,
+      name: "必填",
+    },
+    "show-message": {
+      type: "boolean",
+      default: true,
+      name: "显示校验错误信息",
+    },
+    "inline-message": {
+      type: "boolean",
+      default: false,
+      name: "以行内形式展示校验信息",
+    },
+    size: {
+      type: "select",
+      name: "尺寸",
+      select: ["medium", "small", "mini"],
+    },
   },
 };
 
@@ -400,6 +424,7 @@ export const formOptions = {
     model: {
       type: "string",
       name: "表单数据对象",
+      inProp: false,
     },
     inline: {
       type: "boolean",
