@@ -11,6 +11,12 @@ export default new Vuex.Store({
       form: {
         model: "formData",
         "label-width": "80px",
+        inline: false,
+        "label-position": "left",
+        "hide-required-asterisk": false,
+        "show-message": false,
+        "inline-message": false,
+        disabled: false,
       },
       items: [],
     },

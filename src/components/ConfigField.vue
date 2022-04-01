@@ -1,28 +1,18 @@
 <!--  -->
 <template>
   <div class="" v-if="item.show === false ? false : true">
-    <p class="title">
-      {{ item.name }}
-      <el-tooltip
-        v-if="item.tip"
-        effect="light"
-        :content="item.tip"
-        placement="top"
-        ><i class="el-icon-info" />
-      </el-tooltip>
-    </p>
-    <div v-if="item.type === 'string'">
+    <template v-if="item.type === 'string'">
       <el-input v-model="cValue"></el-input>
-    </div>
+    </template>
 
-    <div v-if="item.type === 'number'">
+    <template v-if="item.type === 'number'">
       <el-input v-model="cValue" type="number"></el-input>
-    </div>
+    </template>
 
-    <div v-if="item.type === 'boolean'">
+    <template v-if="item.type === 'boolean'">
       <el-switch v-model="cValue"></el-switch>
-    </div>
-    <div v-if="item.type === 'select'">
+    </template>
+    <template v-if="item.type === 'select'">
       <el-select v-model="cValue" placeholder="请选择">
         <el-option
           v-for="value in item.select"
@@ -32,7 +22,7 @@
         >
         </el-option>
       </el-select>
-    </div>
+    </template>
     <b-select-options v-if="item.type === 'select-options'"></b-select-options>
   </div>
 </template>
@@ -50,8 +40,8 @@ export default {
     value: {},
   },
   model: {
-    prop: "value", //绑定的值，通过父组件传递
-    event: "change", //自定义时间名
+    prop: "value",
+    event: "change",
   },
   data() {
     return {

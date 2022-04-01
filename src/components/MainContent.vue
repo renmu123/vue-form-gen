@@ -5,8 +5,12 @@
       <template v-if="form.items.length !== 0">
         <el-form
           class=""
-          :label-width="form.form['label-width'] || ''"
-          :label-position="form.form['label-position'] || ''"
+          :label-width="form.form['label-width']"
+          :label-position="form.form['label-position']"
+          :hide-required-asterisk="form.form['hide-required-asterisk']"
+          :show-message="form.form['show-message']"
+          :inline-message="form.form['inline-message']"
+          :disabled="form.form.disabled"
         >
           <draggable
             class="dragArea list-group"

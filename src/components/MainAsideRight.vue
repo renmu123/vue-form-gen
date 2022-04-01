@@ -1,47 +1,97 @@
 <!--  -->
 <template>
   <div class="aside">
-    <el-tabs type="border-card">
-      <el-tab-pane label="组件配置">
-        <div v-if="!currentItem">暂无数据</div>
-        <template v-else>
-          <div>
-            <p class="title">字段名</p>
-            <el-input v-model="currentItem.prop"></el-input>
-          </div>
-          <div>
-            <p class="title">标题</p>
-            <el-input v-model="currentItem.label"></el-input>
-          </div>
-          <div>
-            <p class="title">栅格</p>
-            <el-slider
-              v-model="currentItem.span"
-              @change="changeSpan"
-              :max="24"
-            ></el-slider>
-          </div>
-          <div v-for="(item, key) in options" :key="key">
-            <config-field
-              :item="item"
-              v-model="currentItem.sub[key]"
-            ></config-field>
-          </div>
-        </template>
-      </el-tab-pane>
-      <el-tab-pane label="表单项配置">
-        <div v-if="!currentItem">暂无数据</div>
-        <div v-for="(item, key) in itemOptions" :key="key" v-else>
-          <config-field :item="item" v-model="currentItem[key]"></config-field>
-        </div>
-      </el-tab-pane>
-      <el-tab-pane label="表单配置">
-        <div v-if="!currentItem">暂无数据</div>
-        <div v-for="(item, key) in formOptions" :key="key" v-else>
-          <config-field :item="item" v-model="form.form[key]"></config-field>
-        </div>
-      </el-tab-pane>
-    </el-tabs>
+    <el-form label-width="120px" label-position="left">
+      <el-tabs type="border-card" value="1">
+        <el-tab-pane label="组件配置" name="1">
+          <div v-if="!currentItem">暂无数据</div>
+          <template v-else>
+            <el-form-item label="字段名" class="form-item">
+              <el-input v-model="currentItem.prop"></el-input>
+            </el-form-item>
+            <el-form-item label="标题" class="form-item">
+              <el-input v-model="currentItem.label"></el-input>
+            </el-form-item>
+
+            <el-form-item label="栅格" class="form-item">
+              <el-slider
+                v-model="currentItem.span"
+                @change="changeSpan"
+                :max="24"
+              ></el-slider>
+            </el-form-item>
+
+            <el-form-item
+              v-for="(item, key) in options"
+              :key="key"
+              class="form-item"
+              ><template slot="label"
+                >{{ item.name }}
+                <el-tooltip
+                  v-if="item.tip"
+                  effect="light"
+                  :content="item.tip"
+                  placement="top"
+                  ><i class="el-icon-info" /> </el-tooltip
+              ></template>
+              <config-field
+                :item="item"
+                v-model="currentItem.sub[key]"
+              ></config-field>
+            </el-form-item>
+          </template>
+        </el-tab-pane>
+
+        <el-tab-pane label="表单项配置" name="2">
+          <div v-if="!currentItem">暂无数据</div>
+          <template v-else>
+            <el-form-item
+              v-for="(item, key) in itemOptions"
+              :key="key"
+              class="form-item"
+              ><template slot="label"
+                >{{ item.name }}
+                <el-tooltip
+                  v-if="item.tip"
+                  effect="light"
+                  :content="item.tip"
+                  placement="top"
+                  ><i class="el-icon-info" /> </el-tooltip
+              ></template>
+              <config-field
+                :item="item"
+                v-model="currentItem[key]"
+              ></config-field>
+            </el-form-item>
+          </template>
+        </el-tab-pane>
+
+        <el-tab-pane label="表单配置" name="3">
+          <div v-if="!currentItem">暂无数据</div>
+          <template v-else>
+            <el-form-item
+              v-for="(item, key) in formOptions"
+              :key="key"
+              class="form-item"
+              ><template slot="label"
+                >{{ item.name }}
+                <el-tooltip
+                  v-if="item.tip"
+                  effect="light"
+                  :content="item.tip"
+                  placement="top"
+                  ><i class="el-icon-info" /> </el-tooltip
+              ></template>
+
+              <config-field
+                :item="item"
+                v-model="form.form[key]"
+              ></config-field>
+            </el-form-item>
+          </template>
+        </el-tab-pane>
+      </el-tabs>
+    </el-form>
   </div>
 </template>
 
@@ -89,8 +139,7 @@ export default {
 .aside {
   width: 400px;
 }
-.title {
-  margin-bottom: 4px;
-  font-size: 18px;
+.form-item {
+  margin-bottom: 12px;
 }
 </style>

@@ -19,23 +19,25 @@ function genProps(item, options) {
 
 export function defaultRender(item, options, form) {
   const props = genProps(item, options);
-  const tag = options._tag;
-  const model = `${form.form.model}.${item.prop}`;
+  const tag = options.tag;
+  const formData = form.form.model;
+  const model = `${formData}.${item.prop}`;
 
   const componentHTML = `<${tag} v-model="${model}" ${props}></${tag}>`;
 
   return {
     template: componentHTML,
     data: {
-      formData: { [item.prop]: item.sub._defaultValue } ?? {},
+      [formData]: { [item.prop]: item.sub._defaultValue } ?? {},
     },
   };
 }
 
 export function radioRender(item, options, form) {
   const props = genProps(item, options);
-  const tag = options._tag;
-  const model = `${form.form.model}.${item.prop}`;
+  const tag = options.tag;
+  const formData = form.form.model;
+  const model = `${formData}.${item.prop}`;
 
   // 生成options 元素
   const optionsData = `${item.prop}Options`;
@@ -51,7 +53,7 @@ export function radioRender(item, options, form) {
   return {
     template: componentHTML,
     data: {
-      formData: { [item.prop]: item.sub._defaultValue } ?? {},
+      [formData]: { [item.prop]: item.sub._defaultValue } ?? {},
       [optionsData]: item.sub.options,
     },
   };
@@ -59,8 +61,9 @@ export function radioRender(item, options, form) {
 
 export function selectRender(item, options, form) {
   const props = genProps(item, options);
-  const tag = options._tag;
-  const model = `${form.form.model}.${item.prop}`;
+  const tag = options.tag;
+  const formData = form.form.model;
+  const model = `${formData}.${item.prop}`;
 
   // 生成options 元素
   const optionsData = `${item.prop}Options`;
@@ -75,7 +78,7 @@ export function selectRender(item, options, form) {
   return {
     template: componentHTML,
     data: {
-      formData: { [item.prop]: item.sub._defaultValue } ?? {},
+      [formData]: { [item.prop]: item.sub._defaultValue } ?? {},
       [optionsData]: item.sub.options,
     },
   };

@@ -12,7 +12,7 @@ const ElSelect = {
   name: "el-select",
   category: "基础组件",
   icon: "form-select",
-  _tag: "el-select",
+  tag: "el-select",
   _render: selectRender,
 
   config: {
@@ -39,7 +39,7 @@ const ElSelect = {
     disabled: {
       type: "boolean",
       default: false,
-      name: "是否禁用",
+      name: "禁用",
     },
     size: {
       type: "select",
@@ -54,12 +54,12 @@ const ElSelect = {
     multiple: {
       type: "boolean",
       default: false,
-      name: "是否多选",
+      name: "多选",
     },
     "collapse-tags": {
       type: "boolean",
       name: "按文字的形式展示",
-      tip: "多选时是否将选中值按文字的形式展示",
+      tip: "多选时将选中值按文字的形式展示",
       default: false,
     },
     "multiple-limit": {
@@ -81,11 +81,11 @@ const ElSelect = {
     filterable: {
       type: "boolean",
       default: false,
-      name: "是否可搜索",
+      name: "可搜索",
     },
     "allow-create": {
       type: "boolean",
-      name: "是否允许用户创建新条目，需配合 filterable 使用",
+      name: "允许用户创建新条目，需配合 filterable 使用",
       default: false,
       show: false,
     },
@@ -96,7 +96,7 @@ const ElSelect = {
     },
     remote: {
       type: "boolean",
-      name: "是否为远程搜索",
+      name: "为远程搜索",
       default: false,
       show: false,
     },
@@ -107,7 +107,7 @@ const ElSelect = {
     },
     loading: {
       type: "boolean",
-      name: "是否正在从远程获取数据",
+      name: "正在从远程获取数据",
       default: false,
       show: false,
     },
@@ -136,7 +136,7 @@ const ElSelect = {
     },
     "reserve-keyword": {
       type: "boolean",
-      name: "多选且可搜索时，是否在选中一个选项后保留当前的搜索关键词",
+      name: "多选且可搜索时，在选中一个选项后保留当前的搜索关键词",
       default: false,
     },
     "default-first-option": {
@@ -147,13 +147,13 @@ const ElSelect = {
     },
     "popper-append-to-body": {
       type: "boolean",
-      name: "是否将弹出框插入至 body 元素",
+      name: "将弹出框插入至 body 元素",
       tip: "在弹出框的定位出现问题时，可将该属性设置为 false",
       default: true,
     },
     "automatic-dropdown": {
       type: "boolean",
-      name: "对于不可搜索的 Select，是否在输入框获得焦点后自动弹出选项菜单",
+      name: "对于不可搜索的 Select，在输入框获得焦点后自动弹出选项菜单",
       default: false,
       show: false,
     },
@@ -168,7 +168,7 @@ const ElInput = {
   title: "输入框",
   name: "el-input",
   icon: "form-input",
-  _tag: "el-input",
+  tag: "el-input",
   _render: defaultRender,
 
   config: {
@@ -192,7 +192,7 @@ const ElInput = {
     clearable: {
       type: "boolean",
       default: false,
-      name: "是否可清空",
+      name: "可清空",
     },
     disabled: {
       type: "boolean",
@@ -210,12 +210,12 @@ const ElInput = {
     "show-word-limit": {
       type: "boolean",
       default: false,
-      name: "是否显示输入字数统计",
+      name: "显示字数统计",
     },
     "show-password": {
       type: "boolean",
       default: false,
-      name: "是否显示切换密码图标",
+      name: "显示密码图标",
     },
     size: {
       type: "select",
@@ -274,7 +274,7 @@ const ElInput = {
     },
     resize: {
       type: "string",
-      name: "控制是否能被用户缩放",
+      name: "控制能被用户缩放",
     },
     autofocus: {
       type: "boolean",
@@ -297,7 +297,7 @@ const ElInput = {
     "validate-event": {
       type: "boolean",
       default: true,
-      name: "输入时是否触发表单的校验",
+      name: "输入触发校验",
     },
   },
 };
@@ -310,7 +310,7 @@ const elRadioGroup = {
   title: "单选框",
   name: "el-radio-group",
   icon: "el-radio-group",
-  _tag: "el-radio-group",
+  tag: "el-radio-group",
   _render: radioRender,
 
   config: {
@@ -332,7 +332,7 @@ const elRadioGroup = {
     disabled: {
       type: "boolean",
       default: false,
-      name: "是否禁用",
+      name: "禁用",
       inProp: false,
     },
     border: {
@@ -363,17 +363,17 @@ export const itemOptions = {
   },
   "label-width": {
     type: "string",
-    name: "表单域标签的的宽度",
+    name: "标签宽度",
   },
   required: {
     type: "boolean",
     default: false,
-    name: "是否必填",
+    name: "必填",
   },
   "show-message": {
     type: "boolean",
     default: true,
-    name: "是否显示校验错误信息",
+    name: "显示校验错误信息",
   },
   "inline-message": {
     type: "boolean",
@@ -382,7 +382,7 @@ export const itemOptions = {
   },
   size: {
     type: "select",
-    name: "用于控制该表单域下组件的尺寸",
+    name: "尺寸",
     select: ["medium", "small", "mini"],
   },
 };
@@ -401,50 +401,50 @@ export const formOptions = {
     type: "select",
     default: "right",
     select: ["right", "left", "top"],
-    name: "表单域标签的位置",
+    name: "位置",
   },
   "label-width": {
     type: "string",
-    name: "表单域标签的宽度",
-  },
-  "label-suffix": {
-    type: "string",
-    name: "表单域标签的后缀",
-  },
-  "hide-required-asterisk": {
-    type: "boolean",
-    default: false,
-    name: "是否显示必填字段的标签旁边的红色星号",
-  },
-  "show-message": {
-    type: "boolean",
-    default: true,
-    name: "是否显示校验错误信息",
-  },
-  "inline-message": {
-    type: "boolean",
-    default: false,
-    name: "是否以行内形式展示校验信息",
-  },
-  "status-icon": {
-    type: "boolean",
-    default: false,
-    name: "是否在输入框中显示校验结果反馈图标",
-  },
-  "validate-on-rule-change": {
-    type: "boolean",
-    default: true,
-    name: "是否在 rules 属性改变后立即触发一次验证",
-  },
-  size: {
-    type: "string",
-    select: ["medium", "small", "mini"],
-    name: "用于控制该表单内组件的尺寸",
+    name: "宽度",
   },
   disabled: {
     type: "boolean",
     default: true,
-    name: "是否禁用该表单内的所有组件",
+    name: "禁用表单",
+  },
+  "hide-required-asterisk": {
+    type: "boolean",
+    default: false,
+    name: "隐藏必填字段的标签旁边的红色星号",
+  },
+  size: {
+    type: "select",
+    name: "尺寸",
+    select: ["medium", "small", "mini"],
+  },
+  "show-message": {
+    type: "boolean",
+    default: true,
+    name: "显示校验错误信息",
+  },
+  "inline-message": {
+    type: "boolean",
+    default: false,
+    name: "行内展示校验信息",
+  },
+  "status-icon": {
+    type: "boolean",
+    default: false,
+    name: "输入框中显示校验结果反馈图标",
+  },
+  "validate-on-rule-change": {
+    type: "boolean",
+    default: true,
+    name: "在 rules 属性改变后立即触发一次验证",
+  },
+  "label-suffix": {
+    type: "string",
+    name: "后缀",
   },
 };
 
