@@ -159,7 +159,7 @@ const ElSelect = {
       show: false,
     },
   },
-  default: {
+  defaultConfig: {
     _defaultValue: "",
     placeholder: "请选择",
     disabled: false,
@@ -310,7 +310,7 @@ const ElInput = {
       name: "输入触发校验",
     },
   },
-  default: {
+  defaultConfig: {
     _defaultValue: "",
     type: "text",
     placeholder: "请输入",
@@ -365,7 +365,7 @@ const elRadioGroup = {
       inProp: false,
     },
   },
-  default: {},
+  defaultConfig: {},
 };
 
 export const itemOptions = {

@@ -82,64 +82,17 @@ export default {
       this.$store.commit("pushItem", item);
     },
     genData(type) {
-      let item = "";
       const span = this.$store.state.span;
+      const components = this.componentsObj[type];
+      if (!components) throw Error("该组件未注册");
 
-      // let item = {
-      //   type: type,
-      //   span: span, // 重要
-      //   required: false,
-      //   label: "输入框111",
-      //   sub: {
-      //     _defaultValue: "",
-      //     type: "text",
-      //     placeholder: "请输入111",
-      //     clearable: false,
-      //   },
-      // };
-
-      if (type === "el-input") {
-        item = {
-          type: type,
-          span: span, // 重要
-          required: false,
-          label: "输入框111",
-          sub: {
-            _defaultValue: "",
-            type: "text",
-            placeholder: "请输入111",
-            clearable: false,
-          },
-        };
-      } else if (type === "el-select") {
-        item = {
-          type: type,
-          required: false,
-          span: span, // 重要
-          label: "选择器",
-          sub: {
-            _defaultValue: "",
-            placeholder: "请选择",
-            disabled: false,
-            options: [
-              { value: "选项3", label: "选项3" },
-              { value: "选项2", label: "选项2" },
-            ],
-          },
-        };
-      } else if (type === "el-radio-group") {
-        item = {
-          type: type,
-          required: false,
-          span: span, // 重要
-          label: "单选框",
-          sub: {
-            _defaultValue: "",
-          },
-        };
-      } else {
-        throw Error("组件还未注册");
-      }
+      let item = {
+        type: type,
+        span: span,
+        required: false,
+        label: components.title,
+        sub: components.defaultConfig ?? {},
+      };
 
       for (const [key, value] of Object.entries(this.itemOptions.config)) {
         if (!(key in item) && value.default !== undefined) {
@@ -152,9 +105,7 @@ export default {
         }
       }
 
-      for (const [key2, value2] of Object.entries(
-        this.componentsObj[type].config
-      )) {
+      for (const [key2, value2] of Object.entries(components.config)) {
         if (!(key2 in item.sub) && value2.default !== undefined) {
           item.sub[key2] = value2.default;
         }
