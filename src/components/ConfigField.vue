@@ -1,6 +1,6 @@
 <!--  -->
 <template>
-  <div class="" v-if="item.show === false ? false : true">
+  <div class="">
     <template v-if="item.type === 'string'">
       <el-input v-model="cValue"></el-input>
     </template>

@@ -77,17 +77,17 @@ export default {
         }
       }
     },
-    async add(type) {
-      const item = this.genData(type);
+    async add(name) {
+      const item = this.genData(name);
       this.$store.commit("pushItem", item);
     },
-    genData(type) {
+    genData(name) {
       const span = this.$store.state.span;
-      const components = this.componentsObj[type];
+      const components = this.componentsObj[name];
       if (!components) throw Error("该组件未注册");
 
       let item = {
-        type: type,
+        name,
         colConfig: {
           span: span,
         },

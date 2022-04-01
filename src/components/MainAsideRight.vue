@@ -46,7 +46,7 @@
           <div v-if="isEmpty(currentItem)">暂无数据</div>
           <template v-else>
             <el-form-item
-              v-for="(item, key) in itemOptions.config"
+              v-for="(item, key) in itemOptions"
               :key="key"
               class="form-item"
               ><template slot="label"
@@ -70,7 +70,7 @@
           <div v-if="isEmpty(currentItem)">暂无数据</div>
           <template v-else>
             <el-form-item
-              v-for="(item, key) in formOptions.config"
+              v-for="(item, key) in formOptions"
               :key="key"
               class="form-item"
               ><template slot="label"
@@ -112,14 +112,14 @@ export default {
   computed: {
     options() {
       const components =
-        this.$store.getters.componentsObj[this.currentItem.type];
+        this.$store.getters.componentsObj[this.currentItem.name];
       return components ? components.config : [];
     },
     itemOptions() {
-      return this.$store.state.itemOptions;
+      return this.convert(this.$store.state.itemOptions.config);
     },
     formOptions() {
-      return this.$store.state.formOptions;
+      return this.convert(this.$store.state.formOptions.config);
     },
     currentItem() {
       return this.$store.getters.currentItem;
@@ -130,6 +130,14 @@ export default {
   },
   watch: {},
   methods: {
+    convert(obj) {
+      const arr = Object.entries(obj);
+      return Object.fromEntries(
+        arr.filter(([_, item]) => {
+          return !(item.show === false);
+        })
+      );
+    },
     changeSpan(val) {
       this.$store.commit("setSpan", val);
     },

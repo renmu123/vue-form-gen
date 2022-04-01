@@ -40,17 +40,17 @@
                   @click.native="config(index)"
                 >
                   <el-input
-                    v-if="item.type === 'el-input'"
+                    v-if="item.name === 'el-input'"
                     v-model="item.config._defaultValue"
                     :placeholder="item.config.placeholder"
-                    :type="item.config.type"
+                    :name="item.config.name"
                     :disabled="item.config.disabled"
                     :clearable="item.config.clearable"
                     :show-password="item.config['show-password']"
                   ></el-input>
 
                   <el-select
-                    v-if="item.type === 'el-select'"
+                    v-if="item.name === 'el-select'"
                     :placeholder="item.config.placeholder"
                     :multiple="item.config.multiple"
                     :disabled="item.config.disabled"
@@ -68,7 +68,7 @@
 
                   <el-radio-group
                     v-model="item.config._defaultValue"
-                    v-if="item.type === 'el-radio-group'"
+                    v-if="item.name === 'el-radio-group'"
                     :disabled="item.config.disabled"
                   >
                     <el-radio

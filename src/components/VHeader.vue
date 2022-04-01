@@ -47,7 +47,7 @@ export default {
   methods: {
     genItemData(data) {
       let formItem = data.items.map((item) => {
-        const options = this.$store.getters.componentsObj[item.type];
+        const options = this.$store.getters.componentsObj[item.name];
 
         const render = options._render;
 

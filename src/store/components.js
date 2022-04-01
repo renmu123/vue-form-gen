@@ -397,7 +397,7 @@ export const itemOptions = {
     "show-message": {
       type: "boolean",
       default: true,
-      name: "显示校验错误信息",
+      name: "显示错误信息",
     },
     "inline-message": {
       type: "boolean",
@@ -459,22 +459,24 @@ export const formOptions = {
     "show-message": {
       type: "boolean",
       default: true,
-      name: "显示校验错误信息",
+      name: "显示错误信息",
     },
     "inline-message": {
       type: "boolean",
       default: false,
-      name: "行内展示校验信息",
+      name: "行内展示信息",
     },
     "status-icon": {
       type: "boolean",
       default: false,
       name: "输入框中显示校验结果反馈图标",
+      show: false,
     },
     "validate-on-rule-change": {
       type: "boolean",
       default: true,
       name: "在 rules 属性改变后立即触发一次验证",
+      show: false,
     },
     "label-suffix": {
       type: "string",
