@@ -3,7 +3,7 @@
     <v-header></v-header>
     <div class="home">
       <main-aside-left></main-aside-left>
-      <main-content></main-content>
+      <main-content style="flex-grow: 1"></main-content>
       <main-aside-right></main-aside-right>
     </div>
   </div>

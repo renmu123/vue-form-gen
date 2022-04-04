@@ -1,8 +1,27 @@
 <template>
   <div class="">
-    <el-button @click="dialogVisible = true">生成</el-button>
+    <el-button
+      @click="
+        genText(form);
+        dialogVisible = true;
+      "
+      type="primary"
+      >生成</el-button
+    >
     <el-dialog title="提示" :visible.sync="dialogVisible" width="80%">
-      <el-button @click="genText(form)">生成</el-button>
+      <el-button
+        type="primary"
+        class="copy"
+        :data-clipboard-text="template + script"
+        >复制全部</el-button
+      >
+      <el-button type="primary" class="copy" :data-clipboard-text="template"
+        >复制 template</el-button
+      >
+      <el-button type="primary" class="copy" :data-clipboard-text="script"
+        >复制 script</el-button
+      >
+
       <p style="white-space: pre-wrap">{{ template }}</p>
       <p style="white-space: pre-wrap">{{ script }}</p>
       <span slot="footer" class="dialog-footer">
@@ -18,6 +37,7 @@
 <script>
 import { jsFormat, htmlFormat, cssFormat } from "@/utils";
 import { merge } from "lodash-es";
+import Clipboard from "clipboard";
 
 export default {
   components: {},
@@ -31,6 +51,11 @@ export default {
   },
   created() {},
   mounted() {
+    const clipboard = new Clipboard(".copy");
+    clipboard.on("success", () => {
+      this.$message.success("复制成功");
+    });
+
     setTimeout(() => {
       console.log(this.genText(this.form));
     }, 500);
