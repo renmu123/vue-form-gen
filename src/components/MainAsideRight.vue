@@ -1,6 +1,6 @@
 <!--  -->
 <template>
-  <div class="aside">
+  <div class="panel">
     <el-form label-width="120px" label-position="left">
       <el-tabs type="border-card" value="1">
         <el-tab-pane label="组件配置" name="1">
@@ -26,14 +26,14 @@
               :key="key"
               class="form-item"
               ><template slot="label"
-                >{{ item.name }}
-                <el-tooltip
+                ><el-tooltip
                   v-if="item.tip"
                   effect="light"
                   :content="item.tip"
                   placement="top"
-                  ><i class="el-icon-info" /> </el-tooltip
-              ></template>
+                  ><i class="el-icon-info" /></el-tooltip
+                >{{ item.name }}
+              </template>
               <config-field
                 :item="item"
                 v-model="currentItem.config[key]"
@@ -50,14 +50,14 @@
               :key="key"
               class="form-item"
               ><template slot="label"
-                >{{ item.name }}
-                <el-tooltip
+                ><el-tooltip
                   v-if="item.tip"
                   effect="light"
                   :content="item.tip"
                   placement="top"
                   ><i class="el-icon-info" /> </el-tooltip
-              ></template>
+                >{{ item.name }}
+              </template>
               <config-field
                 :item="item"
                 v-model="currentItem.itemConfig[key]"
@@ -74,14 +74,14 @@
               :key="key"
               class="form-item"
               ><template slot="label"
-                >{{ item.name }}
-                <el-tooltip
+                ><el-tooltip
                   v-if="item.tip"
                   effect="light"
                   :content="item.tip"
                   placement="top"
                   ><i class="el-icon-info" /> </el-tooltip
-              ></template>
+                >{{ item.name }}
+              </template>
 
               <config-field
                 :item="item"
@@ -113,7 +113,7 @@ export default {
     options() {
       const components =
         this.$store.getters.componentsObj[this.currentItem.name];
-      return components ? components.config : [];
+      return components ? this.convert(components.config) : [];
     },
     itemOptions() {
       return this.convert(this.$store.state.itemOptions.config);
@@ -146,10 +146,25 @@ export default {
 };
 </script>
 <style scoped>
-.aside {
+.panel {
   width: 400px;
+}
+.panel::v-deep .el-tabs__content {
+  overflow: auto;
+  height: calc(100vh - 150px);
 }
 .form-item {
   margin-bottom: 12px;
+}
+.label {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.form-item::v-deep .el-form-item__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 </style>

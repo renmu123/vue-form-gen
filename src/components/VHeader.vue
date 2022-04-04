@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="header">
     <el-button
       @click="
         genText(form);
@@ -85,13 +85,13 @@ export default {
       return formItem;
     },
     genHtml(items, form) {
-      const options = this.$store.state.formOptions;
+      const formOptions = this.$store.state.formOptions;
 
-      const render = options._render;
+      const render = formOptions._render;
 
       let subItem = render(
         form.form,
-        options,
+        formOptions,
         form,
         `${items.map((item) => item.template).join("")}`
       );
@@ -112,7 +112,19 @@ export default {
       let watch = {};
       let created = [];
       let mounted = [];
+
       let methods = [];
+      console.log("items", items);
+      items.forEach((item) => {
+        if (!item.methods || item.methods.length === 0) return;
+        item.methods.forEach(({ name, params }) => {
+          console.log("kk", name, params);
+          // methods[name] = `${name}(${params.join(", ")}){}`;
+          methods.push(`${name}(${params.join(", ")}){}`);
+        });
+        console.log("aa", methods);
+        // merge(data, item.methods);
+      });
 
       let data = {};
       items.forEach((item) => {
@@ -129,7 +141,7 @@ export default {
         watch:{},
         created(){},
         mounted(){},
-        methods:{},
+        methods:{${methods.join(",\n")}},
       }`);
     },
 
@@ -162,4 +174,8 @@ export default {
   },
 };
 </script>
-<style scoped></style>
+<style scoped>
+.header {
+  height: 40px;
+}
+</style>

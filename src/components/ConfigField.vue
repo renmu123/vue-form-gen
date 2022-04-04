@@ -24,6 +24,10 @@
       </el-select>
     </template>
     <b-select-options v-if="item.type === 'select-options'"></b-select-options>
+
+    <template v-if="item.type === 'event'">
+      <el-input v-model="cValue" type="event"></el-input>
+    </template>
   </div>
 </template>
 

@@ -17,6 +17,7 @@ const ElSelect = {
   _render: selectRender,
 
   config: {
+    // 会被默认绑定上v-model上
     _defaultValue: {
       type: "string",
       default: "",
@@ -59,25 +60,27 @@ const ElSelect = {
     },
     "collapse-tags": {
       type: "boolean",
-      name: "按文字的形式展示",
+      name: "多选文字展示",
       tip: "多选时将选中值按文字的形式展示",
       default: false,
     },
     "multiple-limit": {
       type: "number",
-      name: "多选最多项目数",
+      name: "多选最多项目",
       tip: "多选时用户最多可以选择的项目数，为 0 则不限制",
       default: 0,
     },
     name: {
       type: "string",
       name: "select input 的 name 属性",
+      show: false,
     },
     autocomplete: {
       type: "select",
       name: "select input 的 autocomplete 属性",
       select: ["on", "off"],
       default: "off",
+      show: false,
     },
     filterable: {
       type: "boolean",
@@ -139,6 +142,7 @@ const ElSelect = {
       type: "boolean",
       name: "多选且可搜索时，在选中一个选项后保留当前的搜索关键词",
       default: false,
+      show: false,
     },
     "default-first-option": {
       type: "boolean",
@@ -151,6 +155,7 @@ const ElSelect = {
       name: "将弹出框插入至 body 元素",
       tip: "在弹出框的定位出现问题时，可将该属性设置为 false",
       default: true,
+      show: false,
     },
     "automatic-dropdown": {
       type: "boolean",
@@ -158,11 +163,48 @@ const ElSelect = {
       default: false,
       show: false,
     },
+
+    change: {
+      type: "event",
+      name: "change",
+      tip: "选中值发生变化时触发",
+      params: ["val"],
+    },
+    "visible-change": {
+      type: "event",
+      name: "visible-change",
+      tip: "拉框出现/隐藏时触发",
+      params: ["val"],
+    },
+    "remove-tag": {
+      type: "event",
+      name: "remove-tag",
+      tip: "多选模式下移除tag时触发",
+      params: ["removedTag"],
+    },
+    clear: {
+      type: "event",
+      name: "clear",
+      tip: "可清空的单选模式下用户点击清空按钮时触发",
+    },
+    blur: {
+      type: "event",
+      name: "blur",
+      tip: "当 input 失去焦点时触发",
+      params: ["event"],
+    },
+    focus: {
+      type: "event",
+      name: "focus",
+      tip: "当 input 获得焦点时触发",
+      params: ["event"],
+    },
   },
   defaultConfig: {
     _defaultValue: "",
     placeholder: "请选择",
     disabled: false,
+    filterable: true,
     options: [
       { value: "选项3", label: "选项3" },
       { value: "选项2", label: "选项2" },
@@ -261,6 +303,7 @@ const ElInput = {
       type: "string",
       name: "name",
       tip: "原生属性",
+      show: false,
     },
     readonly: {
       type: "boolean",
@@ -272,19 +315,25 @@ const ElInput = {
       type: "number",
       name: "最大值",
       tip: "原生属性",
+      show: false,
     },
     min: {
       type: "number",
       name: "最小值",
+      tip: "原生属性",
+      show: false,
     },
     step: {
       type: "number",
       name: "合法数字间隔",
       tip: "原生属性",
+      show: false,
     },
     resize: {
-      type: "string",
+      type: "select",
       name: "控制能被用户缩放",
+      select: ["none", "both", "horizontal", "vertical"],
+      show: false,
     },
     autofocus: {
       type: "boolean",
@@ -295,14 +344,17 @@ const ElInput = {
       type: "string",
       name: "form",
       tip: "原生属性",
+      show: false,
     },
     label: {
       type: "string",
       name: "关联label文字",
+      show: false,
     },
     tabindex: {
       type: "string",
       name: "tabindex",
+      show: false,
     },
     "validate-event": {
       type: "boolean",
